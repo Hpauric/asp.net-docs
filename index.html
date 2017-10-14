@@ -227,13 +227,13 @@ NAV
   <div class="content">
 <h1 id="c-basics">C# Basics</h1>
 
-<h3 id="attributes">attributes</h3>
+<h2 id="attributes">Attributes</h2>
 
 <p>Attributes are effectively metadata that describe the property, method or class that they precede. They are encased in square brackets.</p>
 <pre class="highlight csharp tab-csharp"><code><span class="na">[Display(Name = "Release Date")]</span> <span class="c1">// attribute</span>
 <span class="k">public</span> <span class="n">DateTime</span> <span class="n">ReleaseDate</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
 </code></pre>
-<h3 id="generics">Generics</h3>
+<h2 id="generics">Generics</h2>
 
 <p>Generics can be classes or structs. Type-parameters are names used in place of concrete types when defining a new generic. They can be associated with classes or methods by placing the type parameter in angle brackets <code class="prettyprint">&lt; &gt;</code>
 &ldquo;`csharp
@@ -255,19 +255,15 @@ List<Person> list = new List<Person>();
 - Controller System.Web.Mvc
 - HTMLHelper  System.Web.Mvc</p>
 
-<p>Methods</p>
-
 <h2 id="controllers">Controllers</h2>
 
-<blockquote>
 <p>Rather than having a direct relationship between the URL and a file living on the web server’s hard
 drive, a relationship exists between the URL and a method on a controller class</p>
 
 <p>AccountController: Responsible for account-related requests, such as login and account
 registration</p>
 
-<p>a controller can pass data or objects to a view template using the <code class="prettyprint">ViewBag</code> object. The <code class="prettyprint">ViewBag</code> is a dynamic object that provides a convenient late-bound way to pass information to a view.</p>
-</blockquote>
+<p>A controller can pass data or objects to a view template using the <code class="prettyprint">ViewBag</code> object. The <code class="prettyprint">ViewBag</code> is a dynamic object that provides a convenient late-bound way to pass information to a view.</p>
 
 <h1 id="entity-framework">Entity Framework</h1>
 
@@ -276,11 +272,9 @@ You can use Entity Framework for code-first implementations. This allows you to 
 
 <h2 id="using-entity-framework">Using Entity Framework</h2>
 
-<blockquote>
 <p>The main class that coordinates Entity Framework functionality for a given data model is the database context class. You create this class by deriving from the <code class="prettyprint">System.Data.Entity.DbContext</code> class. In your code you specify which entities are included in the data model.</p>
-</blockquote>
 
-<h3 id="dbcontext"><code class="prettyprint">DbContext</code></h3>
+<h2 id="dbcontext"><code class="prettyprint">DbContext</code></h2>
 
 <p>The <code class="prettyprint">DbContext</code> class you create will usually be quite simple.</p>
 <pre class="highlight csharp tab-csharp"><code>    <span class="k">public</span> <span class="k">class</span> <span class="nc">ProjectContext</span> <span class="p">:</span> <span class="n">DbContext</span>
@@ -316,7 +310,7 @@ You can use Entity Framework for code-first implementations. This allows you to 
 
 <p>Is this true for the Enrollment entity? No. It has it&rsquo;s own EnrollmentID key.</p>
 
-<h3 id="connection-string">Connection String</h3>
+<h2 id="connection-string">Connection String</h2>
 
 <p>Enter this text in the <code class="prettyprint">Web.config</code> file in your project.</p>
 <pre class="highlight html tab-html"><code><span class="nt">&lt;connectionStrings&gt;</span>
@@ -329,7 +323,7 @@ You can use Entity Framework for code-first implementations. This allows you to 
 </code></pre>
 <p>You don&rsquo;t actually have to have a connection string in the <code class="prettyprint">Web.config</code> file. If you don&rsquo;t supply a connection string, Entity Framework will use a default one based on your context class. However in that case the data won&rsquo;t save to a database.</p>
 
-<h3 id="navigation-properties">Navigation Properties</h3>
+<h2 id="navigation-properties">Navigation Properties</h2>
 
 <blockquote>
 <p>Navigation properties provide a way to navigate an association between two entity types. Every object can have a navigation property for every relationship in which it participates. Navigation properties allow you to navigate and manage relationships in both directions, returning either a reference object (if the multiplicity is either one or zero-or-one) or a collection (if the multiplicity is many). You may also choose to have one-way navigation, in which case you define the navigation property on only one of the types that participates in the relationship and not on both.</p>
@@ -391,7 +385,7 @@ One mistake I made at first was that I referenced the wrong assembly. Stack Over
 <span class="kt">string</span> <span class="n">fullString</span> <span class="p">=</span> <span class="s">""</span><span class="p">;</span>
 <span class="n">names</span><span class="p">.</span><span class="nf">ToList</span><span class="p">().</span><span class="nf">ForEach</span><span class="p">(</span><span class="n">i</span> <span class="p">=&gt;</span> <span class="n">fullString</span> <span class="p">+=</span> <span class="p">(</span><span class="n">i</span><span class="p">.</span><span class="nf">ToString</span><span class="p">())</span> <span class="p">+</span> <span class="sc">'\n'</span><span class="p">);</span>
 </code></pre>
-<h3 id="debugging-the-update-database-command">Debugging the Update-Database command</h3>
+<h2 id="debugging-the-update-database-command">Debugging the Update-Database command</h2>
 
 <p>Running the Update-Database command meant that debugging statments like <code class="prettyprint">Debug.WriteLine()</code> didn&rsquo;t work. Instead I threw an error:</p>
 <pre class="highlight csharp tab-csharp"><code><span class="k">throw</span> <span class="k">new</span> <span class="nf">Exception</span><span class="p">(</span><span class="n">fullString</span><span class="p">);</span>
@@ -408,7 +402,7 @@ One mistake I made at first was that I referenced the wrong assembly. Stack Over
 
 <p><a href="https://stackoverflow.com/questions/40606167/error-when-update-database-using-code-first-there-is-already-an-object-named">Great introduction to Code First Migrations</a></p>
 
-<h3 id="nuget-commands">NuGet Commands</h3>
+<h2 id="nuget-commands">NuGet Commands</h2>
 
 <p>There are three main NuGet commands used in migrations.
 - <code class="prettyprint">Enable-Migrations</code> - Used initially to install migration modules
@@ -422,11 +416,10 @@ Add-Migration Initial
 generates
 <code class="prettyprint">bash
 201710021217244_Initial.cs
-</code></p>
+</code>
+You can check the contents of those files and see the effects of running <code class="prettyprint">Add-Migration</code>. You can also modify them once generated, and add your own code. From my experience it is often necessary to do this.</p>
 
-<p>You can check the contents of those files and see the effects of running <code class="prettyprint">Add-Migration</code>. You can also modify them once generated, and add your own code. From my experience it is often necessary to do this.</p>
-
-<h3 id="up-and-down-methods">Up and Down Methods</h3>
+<h2 id="up-and-down-methods">Up and Down Methods</h2>
 
 <p>Every single migration has a method <code class="prettyprint">Up</code> and a method <code class="prettyprint">Down</code>. </p>
 
@@ -441,7 +434,7 @@ generates
 - <code class="prettyprint">DropIndex</code>
 - <code class="prettyprint">DropForeignKey</code></p>
 
-<h3 id="migration-history">Migration History</h3>
+<h2 id="migration-history">Migration History</h2>
 
 <p>Migrations are intended to be incremental. You start with an <code class="prettyprint">Initial</code> migration, and every time you change your model code you generate a new migration file. The database contains a table named <code class="prettyprint">__MigrationsHistory</code> that keeps trace of which migrations have been run in your database.</p>
 
@@ -465,7 +458,7 @@ generates
 
 <p>Error: <code class="prettyprint">Sequence contains more than one element.</code></p>
 
-<h3 id="when-things-go-wrong">When Things Go Wrong</h3>
+<h2 id="when-things-go-wrong">When Things Go Wrong</h2>
 
 <p>Entity Framework is not perfect.</p>
 
@@ -498,7 +491,7 @@ generates
 
 <p>This <code class="prettyprint">@model</code> directive allows you to access the list of movies that the controller passed to the view</p>
 
-<h3 id="layout">Layout</h3>
+<h2 id="layout">Layout</h2>
 
 <p>By convention, the default layout for an ASP.NET app is named <code class="prettyprint">_Layout.cshtml</code>.</p>
 
