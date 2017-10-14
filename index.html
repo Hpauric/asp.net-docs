@@ -269,55 +269,6 @@ registration</p>
 <p>a controller can pass data or objects to a view template using the <code class="prettyprint">ViewBag</code> object. The <code class="prettyprint">ViewBag</code> is a dynamic object that provides a convenient late-bound way to pass information to a view.</p>
 </blockquote>
 
-<h2 id="views">Views</h2>
-
-<blockquote>
-<p>The key transition character in Razor is the “at” sign (@). This single character is used to transition
-from markup to code</p>
-</blockquote>
-
-<h3 id="layout">Layout</h3>
-
-<p>By convention, the default layout for an ASP.NET app is named <code class="prettyprint">_Layout.cshtml</code>.</p>
-
-<p>The default layout is defined in <code class="prettyprint">_ViewStart.cshtml</code> file in <code class="prettyprint">Views</code>.</p>
-
-<h3 id="details-view">Details View</h3>
-
-<blockquote>
-<p>By including a <code class="prettyprint">@model</code> statement at the top of the view template file, you can specify the type of object that the view expects. </p>
-</blockquote>
-
-<h3 id="index-view">Index View</h3>
-
-<blockquote>
-<p><code class="prettyprint">@model IEnumerable&lt;MvcMovie.Models.Movie&gt;</code></p>
-
-<p>This @model directive allows you to access the list of movies that the controller passed to the view</p>
-</blockquote>
-
-<h3 id="actionlink-method"><code class="prettyprint">ActionLink</code> Method</h3>
-
-<p><code class="prettyprint">Html.ActionLink</code></p>
-
-<p>The <code class="prettyprint">Html</code> object is a helper that&rsquo;s exposed using a property on the <code class="prettyprint">System.Web.Mvc.WebViewPage base</code> class. The <code class="prettyprint">ActionLink</code> method of the helper makes it easy to dynamically generate HTML hyperlinks that link to action methods on controllers. </p>
-<pre class="highlight csharp tab-csharp"><code><span class="n">@Html</span><span class="p">.</span><span class="nf">ActionLink</span><span class="p">(</span><span class="s">"Edit"</span><span class="p">,</span> <span class="s">"Edit"</span><span class="p">,</span> <span class="k">new</span> <span class="p">{</span> <span class="n">id</span><span class="p">=</span><span class="n">item</span><span class="p">.</span><span class="n">ID</span> <span class="p">})</span> 
-</code></pre>
-<p>arguments
-- string linkText
-- string actionName (this is the method name unless otherwise specified)
-- string controllerName OR object routeValues</p>
-
-<p>The default route (established in <code class="prettyprint">App_Start\RouteConfig.cs)</code> takes the URL pattern <code class="prettyprint">{controller}/{action}/{id}</code></p>
-
-<p>So for example,the generated route is:</p>
-
-<p>http://localhost:1234/Movies/Edit/4</p>
-
-<h3 id="html-displayfor">Html.DisplayFor</h3>
-
-<h3 id="edit-view">Edit View</h3>
-
 <h1 id="entity-framework">Entity Framework</h1>
 
 <p>Why do we need Entity Framework?
@@ -526,7 +477,7 @@ generates
 
 <p>You can&rsquo;t just run <code class="prettyprint">Add-Migration MyNewMigration</code> and assume everything will work out fine. You need to check to make sure that the generated code works correctly.</p>
 
-<h1 id="asp-net-views">ASP.NET Views</h1>
+<h1 id="views">Views</h1>
 
 <h2 id="using-code">Using Code</h2>
 
@@ -541,15 +492,11 @@ generates
 <span class="err">@</span><span class="p">{</span><span class="n">test</span> <span class="p">=</span> <span class="n">test</span> <span class="p">-</span><span class="m">1</span><span class="p">;}</span>
 <span class="n">@test</span> <span class="c1">// 9</span>
 </code></pre>
-<blockquote>
-<p>By including a <code class="prettyprint">@model</code> statement at the top of the view template file, you can specify the type of object that the view expects.</p>
-</blockquote>
+<p>By including a @model statement at the top of the view template file, you can specify the type of object that the view expects.</p>
 
 <p><code class="prettyprint">@model IEnumerable&lt;Your.Model.Namespace&gt;</code></p>
 
-<blockquote>
-<p>This @model directive allows you to access the list of movies that the controller passed to the view</p>
-</blockquote>
+<p>This <code class="prettyprint">@model</code> directive allows you to access the list of movies that the controller passed to the view</p>
 
 <h3 id="layout">Layout</h3>
 
@@ -583,6 +530,12 @@ generates
 - string linkText
 - string actionName (this is the method name unless otherwise specified)
 - string controllerName OR object routeValues</p>
+
+<p>The default route (established in <code class="prettyprint">App_Start\RouteConfig.cs)</code> takes the URL pattern <code class="prettyprint">{controller}/{action}/{id}</code></p>
+
+<p>So for example,the generated route is:</p>
+
+<p>http://localhost:1234/Movies/Edit/4</p>
 
 <h3 id="html-displayfor">Html.DisplayFor</h3>
 
