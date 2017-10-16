@@ -235,18 +235,15 @@ NAV
 </code></pre>
 <h2 id="generics">Generics</h2>
 
-<p>Generics can be classes or structs. Type-parameters are names used in place of concrete types when defining a new generic. They can be associated with classes or methods by placing the type parameter in angle brackets <code class="prettyprint">&lt; &gt;</code>
-&ldquo;`csharp
-public class List<T> // T stands for type
-{
-    &hellip;
-}</p>
-
-<p>List<int> list = new List<int>();
-List<char> list = new List<char>();
-List<Person> list = new List<Person>();
-&rdquo;`</p>
-
+<p>Generics can be classes or structs. Type-parameters are names used in place of concrete types when defining a new generic. They can be associated with classes or methods by placing the type parameter in angle brackets <code class="prettyprint">&lt; &gt;</code>.</p>
+<pre class="highlight csharp tab-csharp"><code><span class="k">public</span> <span class="k">class</span> <span class="nc">List</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span> <span class="c1">// T stands for type</span>
+<span class="p">{</span>
+<span class="p">...</span>
+<span class="p">}</span>
+<span class="n">List</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;</span> <span class="n">list</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;();</span>
+<span class="n">List</span><span class="p">&lt;</span><span class="kt">char</span><span class="p">&gt;</span> <span class="n">list</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="kt">char</span><span class="p">&gt;();</span>
+<span class="n">List</span><span class="p">&lt;</span><span class="n">Person</span><span class="p">&gt;</span> <span class="n">list</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Person</span><span class="p">&gt;();</span>
+</code></pre>
 <h2 id="asp-net-classes-cheatsheet">ASP.NET Classes Cheatsheet</h2>
 
 <p>Classes
