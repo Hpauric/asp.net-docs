@@ -246,24 +246,14 @@ NAV
 </code></pre>
 <h2 id="asp-net-classes-cheatsheet">ASP.NET Classes Cheatsheet</h2>
 
-<p>Classes</p>
+<h3 id="some-useful-classes">Some Useful Classes</h3>
 
 <ul>
-<li>IEnumerable System.Collections.Generic</li>
-<li>DbContext System.Data.Entity</li>
-<li>Controller System.Web.Mvc</li>
-<li>HTMLHelper  System.Web.Mvc</li>
+<li>IEnumerable <code class="prettyprint">System.Collections.Generic</code></li>
+<li>DbContext <code class="prettyprint">System.Data.Entity</code></li>
+<li>Controller <code class="prettyprint">System.Web.Mvc</code></li>
+<li>HTMLHelper <code class="prettyprint">System.Web.Mvc</code></li>
 </ul>
-
-<h2 id="controllers">Controllers</h2>
-
-<p>Rather than having a direct relationship between the URL and a file living on the web server’s hard
-drive, a relationship exists between the URL and a method on a controller class</p>
-
-<p>AccountController: Responsible for account-related requests, such as login and account
-registration</p>
-
-<p>A controller can pass data or objects to a view template using the <code class="prettyprint">ViewBag</code> object. The <code class="prettyprint">ViewBag</code> is a dynamic object that provides a convenient late-bound way to pass information to a view.</p>
 
 <h1 id="entity-framework">Entity Framework</h1>
 
@@ -310,19 +300,6 @@ You can use Entity Framework for code-first implementations. This allows you to 
 
 <p>Is this true for the Enrollment entity? No. It has it&rsquo;s own EnrollmentID key.</p>
 
-<h2 id="connection-string">Connection String</h2>
-
-<p>Enter this text in the <code class="prettyprint">Web.config</code> file in your project.</p>
-<pre class="highlight html tab-html"><code><span class="nt">&lt;connectionStrings&gt;</span>
-    <span class="nt">&lt;add</span> <span class="na">name=</span><span class="s">"[YOURMODELNAMEHERE]Context"</span>    
-         <span class="na">connectionString=</span><span class="s">"Data Source=(LocalDB)\MSSQLLocalDB;
-  AttachDbFilename=|DataDirectory|\[YOURDATABASENAMEHERE].mdf;
-  Integrated Security=True"</span> 
-         <span class="na">providerName=</span><span class="s">"System.Data.SqlClient"</span><span class="nt">/&gt;</span>
-  <span class="nt">&lt;/connectionStrings&gt;</span>
-</code></pre>
-<p>You don&rsquo;t actually have to have a connection string in the <code class="prettyprint">Web.config</code> file. If you don&rsquo;t supply a connection string, Entity Framework will use a default one based on your context class. However in that case the data won&rsquo;t save to a database.</p>
-
 <h2 id="navigation-properties">Navigation Properties</h2>
 
 <blockquote>
@@ -339,7 +316,7 @@ You can use Entity Framework for code-first implementations. This allows you to 
 
 <p>Navigation properties are typically defined as virtual so that they can take advantage of an Entity Framework feature called lazy loading.</p>
 
-<h1 id="code-first">Code First</h1>
+<h2 id="code-first">Code First</h2>
 
 <p>Entity Framework allows you to develop a data model with a Code First approach.</p>
 
@@ -351,7 +328,7 @@ You can use Entity Framework for code-first implementations. This allows you to 
 
 <p>A connection string provides the information that a provider needs to communicate with a particular database. The Connection String includes parameters such as the name of the driver, Server name and Database name , as well as security information such as user name and password.</p>
 
-<p>First of all, you need to add a connection string to your <code class="prettyprint">Web.config</code> file. Enter this text in the Web.config file in your project.</p>
+<p>Enter this text in the <code class="prettyprint">Web.config</code> file in your project.</p>
 <pre class="highlight html tab-html"><code><span class="nt">&lt;connectionStrings&gt;</span>
     <span class="nt">&lt;add</span> <span class="na">name=</span><span class="s">"[YOURMODELNAMEHERE]Context"</span>    
          <span class="na">connectionString=</span><span class="s">"Data Source=(LocalDB)\MSSQLLocalDB;
@@ -360,19 +337,22 @@ You can use Entity Framework for code-first implementations. This allows you to 
          <span class="na">providerName=</span><span class="s">"System.Data.SqlClient"</span><span class="nt">/&gt;</span>
   <span class="nt">&lt;/connectionStrings&gt;</span>
 </code></pre>
-<p>Note that In Visual Studio 2012 the data source is <code class="prettyprint">(LocalDB)\v11.0</code>. For Visual Studio 2015 and Visual Studio 2017 it is <code class="prettyprint">(LocalDB)\MSSQLLocalDB</code>.
-LocalDB is a lightweight version of the SQL Server Express Database Engine that is targeted for program development. LocalDB starts on demand and runs in user mode, so there is no complex configuration. </p>
+<p>You don&rsquo;t actually have to have a connection string in the <code class="prettyprint">Web.config</code> file. If you don&rsquo;t supply a connection string, Entity Framework will use a default one based on your context class. However in that case the data won&rsquo;t save to a database.</p>
 
-<p>You don&rsquo;t actually have to have a connection string in the Web.config file. If you don&rsquo;t supply a connection string, Entity Framework will use a default one based on your context class. However in that case the data won&rsquo;t save to a database.</p>
+<p>Note that In Visual Studio 2012 the data source is <code class="prettyprint">(LocalDB)\v11.0</code>. For Visual Studio 2015 and Visual Studio 2017 it is <code class="prettyprint">(LocalDB)\MSSQLLocalDB</code>.
+<code class="prettyprint">LocalDB</code> is a lightweight version of the SQL Server Express Database Engine that is targeted for program development. <code class="prettyprint">LocalDB</code> starts on demand and runs in user mode, so there is no complex configuration. </p>
 
 <h3 id="deploying-to-azure">Deploying to Azure</h3>
 
 <p>New connection strings are generated when you deploy to Azure.</p>
 <pre class="highlight html tab-html"><code><span class="nt">&lt;connectionStrings&gt;</span>
-    <span class="nt">&lt;add</span> <span class="na">name=</span><span class="s">"ProjectContext"</span>
-         <span class="na">connectionString=</span><span class="s">"$(ReplacableToken_ProjectContext-Web.config Connection String_0)"</span>        <span class="na">providerName=</span><span class="s">"System.Data.SqlClient"</span> <span class="nt">/&gt;</span>
-    <span class="nt">&lt;add</span> <span class="na">name=</span><span class="s">"ProjectContext_DatabasePublish"</span> <span class="na">connectionString=</span><span class="s">"$(ReplacableToken_ProjectContext_DatabasePublish-Web.config Connection String_0)"</span> <span class="na">providerName=</span><span class="s">"System.Data.SqlClient"</span><span class="nt">/&gt;</span>
-  <span class="nt">&lt;/connectionStrings&gt;</span>
+  <span class="nt">&lt;add</span> <span class="na">name=</span><span class="s">"ProjectContext"</span>
+    <span class="na">connectionString=</span><span class="s">"$(ReplacableToken_ProjectContext-Web.config Connection String_0)"</span>
+    <span class="na">providerName=</span><span class="s">"System.Data.SqlClient"</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;add</span> <span class="na">name=</span><span class="s">"ProjectContext_DatabasePublish"</span>
+    <span class="na">connectionString=</span><span class="s">"$(ReplacableToken_ProjectContext_DatabasePublish-Web.config Connection String_0)"</span>
+    <span class="na">providerName=</span><span class="s">"System.Data.SqlClient"</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/connectionStrings&gt;</span>
 </code></pre>
 <p>You can find them in <code class="prettyprint">[ProjectName]\obj\Release\Package\PackageTmp\Web.config</code>.</p>
 
@@ -531,6 +511,16 @@ You can check the contents of those files and see the effects of running <code c
 <p>http://localhost:1234/Movies/Edit/4</p>
 
 <h3 id="html-displayfor">Html.DisplayFor</h3>
+
+<h1 id="controllers">Controllers</h1>
+
+<p>Rather than having a direct relationship between the URL and a file living on the web server’s hard
+drive, a relationship exists between the URL and a method on a controller class</p>
+
+<p>AccountController: Responsible for account-related requests, such as login and account
+registration</p>
+
+<p>A controller can pass data or objects to a view template using the <code class="prettyprint">ViewBag</code> object. The <code class="prettyprint">ViewBag</code> is a dynamic object that provides a convenient late-bound way to pass information to a view.</p>
 
   </div>
   <div class="dark-box">
