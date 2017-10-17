@@ -370,9 +370,12 @@ One mistake I made at first was that I referenced the wrong assembly. Stack Over
 <p>Running the Update-Database command meant that debugging statments like <code class="prettyprint">Debug.WriteLine()</code> didn&rsquo;t work. Instead I threw an error:</p>
 <pre class="highlight csharp tab-csharp"><code><span class="k">throw</span> <span class="k">new</span> <span class="nf">Exception</span><span class="p">(</span><span class="n">fullString</span><span class="p">);</span>
 </code></pre>
-<p>Then I could see I couldn&rsquo;t access the resource since:
-1. It was saved in the wrong namespace.
-2. It&rsquo;s build action was set to <code class="prettyprint">Resource</code> instead of <code class="prettyprint">Embedded Resource</code>.</p>
+<p>Then I could see I couldn&rsquo;t access the resource since:</p>
+
+<ol>
+<li>It was saved in the wrong namespace.&nbsp;</li>
+<li>It&rsquo;s build action was set to <code class="prettyprint">Resource</code> instead of <code class="prettyprint">Embedded Resource</code>.&nbsp;</li>
+</ol>
 
 <p>After I fixed these mistakes I could easily Seed from a CSV.</p>
 
@@ -384,10 +387,27 @@ One mistake I made at first was that I referenced the wrong assembly. Stack Over
 
 <h2 id="nuget-commands">NuGet Commands</h2>
 
-<p>There are three main NuGet commands used in migrations.
-- <code class="prettyprint">Enable-Migrations</code> - Used initially to install migration modules
-- <code class="prettyprint">Add-Migration MyNewMigration</code> - Used to add a migration
-- <code class="prettyprint">Update-Database</code></p>
+<p>There are three main NuGet commands used in migrations.</p>
+
+<table><thead>
+<tr>
+<th>Command</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">Enable-Migrations</code></td>
+<td>Install migration modules - only needs to be run initially</td>
+</tr>
+<tr>
+<td><code class="prettyprint">Add-Migration [MigrationName]</code></td>
+<td>Add a migration</td>
+</tr>
+<tr>
+<td><code class="prettyprint">Update-Database</code></td>
+<td>Implement any outstanding migrations</td>
+</tr>
+</tbody></table>
 
 <p>Migrations are code files. Every time you run <code class="prettyprint">Add-Migration</code> a code file is generated/updated, usually in a folder called <code class="prettyprint">Migrations</code> inside your project. The name of a migration file is composed with a timestamp of its generation concatenated with the name used when running <code class="prettyprint">Add-Migration</code>. For example
 <code class="prettyprint">bash
@@ -422,22 +442,6 @@ You can check the contents of those files and see the effects of running <code c
 
 <p>The default scenario when you don&rsquo;t specify the <code class="prettyprint">SourceMigration</code> and <code class="prettyprint">TargetMigration</code> parameters is that <code class="prettyprint">SourceMigration</code> is the last migration applied to the database and <code class="prettyprint">TargetMigration</code> is the last of the pending ones. EF determines those parameters by querying the <code class="prettyprint">__MigrationsHistory</code> table of the default database of your project, so if that database is not in a consistent state, your migrations can be generated incorrectly.</p>
 
-<h2 id="the-easiest-way-to-fix-a-problem">The Easiest Way to fix a problem</h2>
-
-<p>Error: <code class="prettyprint">There is already an object named &#39;ModelName&#39; in the database.</code></p>
-
-<ol>
-<li>Delete the <code class="prettyprint">Migrations</code> folder in your solution.</li>
-<li>Delete the tables in the database.</li>
-<li>Delete the <code class="prettyprint">_MigrationHistory</code> table in the database.</li>
-<li>Close the database connection.</li>
-<li>In the NuGet console, run <code class="prettyprint">Enable-Migrations</code>.</li>
-<li>Run <code class="prettyprint">Add-Migration Initial</code>.</li>
-<li>Run <code class="prettyprint">Update-Database</code>.</li>
-</ol>
-
-<p>Error: <code class="prettyprint">Sequence contains more than one element.</code></p>
-
 <h2 id="when-things-go-wrong">When Things Go Wrong</h2>
 
 <p>Entity Framework is not perfect.</p>
@@ -449,6 +453,26 @@ You can check the contents of those files and see the effects of running <code c
 </blockquote>
 
 <p>You can&rsquo;t just run <code class="prettyprint">Add-Migration MyNewMigration</code> and assume everything will work out fine. You need to check to make sure that the generated code works correctly.</p>
+
+<h2 id="erasing-everything-the-easiest-way-to-fix-a-problem">Erasing Everything - The Easiest Way to Fix a Problem</h2>
+
+<p>You can simply delete the database and migrations history. Obviously this is not a viable solution for production code, but it&rsquo;s often the easiest solution for development code.</p>
+
+<ol>
+<li>Delete the <code class="prettyprint">Migrations</code> folder in your solution.</li>
+<li>Delete the tables in the database.</li>
+<li>Delete the <code class="prettyprint">_MigrationHistory</code> table in the database.</li>
+<li>Close the database connection.</li>
+<li>In the NuGet console, run <code class="prettyprint">Enable-Migrations</code>.</li>
+<li>Run <code class="prettyprint">Add-Migration Initial</code>.</li>
+<li>Run <code class="prettyprint">Update-Database</code>.</li>
+</ol>
+
+<h2 id="errors">Errors</h2>
+
+<h3 id="error-sequence-contains-more-than-one-element">Error: <code class="prettyprint">Sequence contains more than one element.</code></h3>
+
+<h3 id="error-there-is-already-an-object-named-modelname-in-the-database">Error: <code class="prettyprint">There is already an object named &#39;ModelName&#39; in the database.</code></h3>
 
 <h1 id="views">Views</h1>
 
