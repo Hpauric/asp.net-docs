@@ -426,13 +426,13 @@ You can check the contents of those files and see the effects of running <code c
 <p>The <code class="prettyprint">Up</code> method updates the database. The <code class="prettyprint">Down</code> method reverts them.</p>
 
 <p>Methods:
-- <code class="prettyprint">CreateTable</code>
-- <code class="prettyprint">CreateIndex</code>
-- <code class="prettyprint">AlterColumn</code>
-- <code class="prettyprint">AddForeignKey</code>
-- <code class="prettyprint">DropTable</code>
-- <code class="prettyprint">DropIndex</code>
-- <code class="prettyprint">DropForeignKey</code></p>
+- <code class="prettyprint">CreateTable</code>&nbsp;
+- <code class="prettyprint">CreateIndex</code>&nbsp;
+- <code class="prettyprint">AlterColumn</code>&nbsp;
+- <code class="prettyprint">AddForeignKey</code>&nbsp;
+- <code class="prettyprint">DropTable</code>&nbsp;
+- <code class="prettyprint">DropIndex</code>&nbsp;
+- <code class="prettyprint">DropForeignKey</code>&nbsp;</p>
 
 <h2 id="migration-history">Migration History</h2>
 
@@ -510,12 +510,12 @@ You can check the contents of those files and see the effects of running <code c
 <p>if you leave it empty it will look for a post action with the same name that on the page you are now</p>
 
 <ul>
-<li>Html.DisplayNameFor</li>
-<li>Html.DisplayFor</li>
-<li>Html.ValidationSummary</li>
-<li>Html.EditorFor</li>
-<li>Html.LabelFor</li>
-<li>Html.DropDownList</li>
+<li><code class="prettyprint">Html.DisplayNameFor</code></li>
+<li><code class="prettyprint">Html.DisplayFor</code></li>
+<li><code class="prettyprint">Html.ValidationSummary</code></li>
+<li><code class="prettyprint">Html.EditorFor</code></li>
+<li><code class="prettyprint">Html.LabelFor</code></li>
+<li><code class="prettyprint">Html.DropDownList</code></li>
 </ul>
 
 <h3 id="html-actionlink"><code class="prettyprint">Html.ActionLink</code></h3>
@@ -528,13 +528,31 @@ You can check the contents of those files and see the effects of running <code c
 - string actionName (this is the method name unless otherwise specified)
 - string controllerName OR object routeValues</p>
 
+<table><thead>
+<tr>
+<th>Type</th>
+<th>Name</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>string</td>
+<td>linkText</td>
+</tr>
+<tr>
+<td>string</td>
+<td>actionName (this is the method name unless otherwise specified)</td>
+</tr>
+<tr>
+<td>string OR object</td>
+<td>controllerName OR routeValues</td>
+</tr>
+</tbody></table>
+
 <p>The default route (established in <code class="prettyprint">App_Start\RouteConfig.cs)</code> takes the URL pattern <code class="prettyprint">{controller}/{action}/{id}</code></p>
 
-<p>So for example,the generated route is:</p>
+<p>So for example,the generated route in this case is <code class="prettyprint">http://localhost:1234/Movies/Edit/4</code></p>
 
-<p>http://localhost:1234/Movies/Edit/4</p>
-
-<h3 id="html-displayfor">Html.DisplayFor</h3>
+<h3 id="html-displayfor"><code class="prettyprint">Html.DisplayFor</code></h3>
 
 <h1 id="controllers">Controllers</h1>
 
