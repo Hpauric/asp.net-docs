@@ -320,8 +320,6 @@ You can use Entity Framework for code-first implementations. This allows you to 
 
 <p>Entity Framework allows you to develop a data model with a Code First approach.</p>
 
-<p>Code First Migrations allow you to update your data model and update the database schema without having to drop and re-create the database.</p>
-
 <p>This means that you can define your models and Entity Framework will create the database for you.</p>
 
 <h2 id="the-connection-string">The Connection String</h2>
@@ -356,32 +354,11 @@ You can use Entity Framework for code-first implementations. This allows you to 
 </code></pre>
 <p>You can find them in <code class="prettyprint">[ProjectName]\obj\Release\Package\PackageTmp\Web.config</code>.</p>
 
-<h2 id="setting-the-seed-method-to-update-from-a-csv-file">Setting the Seed method to update from a csv file.</h2>
-
-<p>Rather than painstakingly typing values into the Seed method, you can set it to import from a CSV file.
-<a href="https://www.davepaquette.com/archive/2014/03/18/seeding-entity-framework-database-from-csv.aspx">There are great instructions on how to do this here.</a>
-One mistake I made at first was that I referenced the wrong assembly. Stack Overflow recommended &ldquo;to make sure you&rsquo;re in the right assembly and with right name: dump and evaluate all the resources available in your target assembly.&rdquo; Which I did:</p>
-<pre class="highlight csharp tab-csharp"><code><span class="kt">string</span><span class="p">[]</span> <span class="n">names</span> <span class="p">=</span> <span class="n">assembly</span><span class="p">.</span><span class="nf">GetManifestResourceNames</span><span class="p">();</span>
-<span class="kt">string</span> <span class="n">fullString</span> <span class="p">=</span> <span class="s">""</span><span class="p">;</span>
-<span class="n">names</span><span class="p">.</span><span class="nf">ToList</span><span class="p">().</span><span class="nf">ForEach</span><span class="p">(</span><span class="n">i</span> <span class="p">=&gt;</span> <span class="n">fullString</span> <span class="p">+=</span> <span class="p">(</span><span class="n">i</span><span class="p">.</span><span class="nf">ToString</span><span class="p">())</span> <span class="p">+</span> <span class="sc">'\n'</span><span class="p">);</span>
-</code></pre>
-<h2 id="debugging-the-update-database-command">Debugging the Update-Database command</h2>
-
-<p>Running the Update-Database command meant that debugging statments like <code class="prettyprint">Debug.WriteLine()</code> didn&rsquo;t work. Instead I threw an error:</p>
-<pre class="highlight csharp tab-csharp"><code><span class="k">throw</span> <span class="k">new</span> <span class="nf">Exception</span><span class="p">(</span><span class="n">fullString</span><span class="p">);</span>
-</code></pre>
-<p>Then I could see I couldn&rsquo;t access the resource since:</p>
-
-<ol>
-<li>It was saved in the wrong namespace.&nbsp;</li>
-<li>It&rsquo;s build action was set to <code class="prettyprint">Resource</code> instead of <code class="prettyprint">Embedded Resource</code>.&nbsp;</li>
-</ol>
-
-<p>After I fixed these mistakes I could easily Seed from a CSV.</p>
-
 <h2 id="migrations">Migrations</h2>
 
-<p>First of all, you don&rsquo;t <em>have</em> to use Migrations. However, if you don&rsquo;t, all database content will be lost when you update your models.</p>
+<p>Code First Migrations allow you to update your data model and update the database schema without having to drop and re-create the database.</p>
+
+<p>You don&rsquo;t <em>have</em> to use Migrations. However, if you don&rsquo;t, all database content will be lost when you update your models.</p>
 
 <p><a href="https://stackoverflow.com/questions/40606167/error-when-update-database-using-code-first-there-is-already-an-object-named">Great introduction to Code First Migrations</a></p>
 
@@ -401,7 +378,7 @@ One mistake I made at first was that I referenced the wrong assembly. Stack Over
 </tr>
 <tr>
 <td><code class="prettyprint">Add-Migration [MigrationName]</code></td>
-<td>Add a migration</td>
+<td>Generate a new migration code file based on changes in your project models</td>
 </tr>
 <tr>
 <td><code class="prettyprint">Update-Database</code></td>
@@ -442,6 +419,15 @@ You can check the contents of those files and see the effects of running <code c
 
 <p>The default scenario when you don&rsquo;t specify the <code class="prettyprint">SourceMigration</code> and <code class="prettyprint">TargetMigration</code> parameters is that <code class="prettyprint">SourceMigration</code> is the last migration applied to the database and <code class="prettyprint">TargetMigration</code> is the last of the pending ones. EF determines those parameters by querying the <code class="prettyprint">__MigrationsHistory</code> table of the default database of your project, so if that database is not in a consistent state, your migrations can be generated incorrectly.</p>
 
+<h2 id="setting-the-seed-method-to-update-from-a-csv-file">Setting the Seed method to update from a csv file.</h2>
+
+<p>Rather than painstakingly typing values into the Seed method, you can set it to import from a CSV file.
+<a href="https://www.davepaquette.com/archive/2014/03/18/seeding-entity-framework-database-from-csv.aspx">There are great instructions on how to do this here.</a>
+One mistake I made at first was that I referenced the wrong assembly. Stack Overflow recommended &ldquo;to make sure you&rsquo;re in the right assembly and with right name: dump and evaluate all the resources available in your target assembly.&rdquo; Which I did:</p>
+<pre class="highlight csharp tab-csharp"><code><span class="kt">string</span><span class="p">[]</span> <span class="n">names</span> <span class="p">=</span> <span class="n">assembly</span><span class="p">.</span><span class="nf">GetManifestResourceNames</span><span class="p">();</span>
+<span class="kt">string</span> <span class="n">fullString</span> <span class="p">=</span> <span class="s">""</span><span class="p">;</span>
+<span class="n">names</span><span class="p">.</span><span class="nf">ToList</span><span class="p">().</span><span class="nf">ForEach</span><span class="p">(</span><span class="n">i</span> <span class="p">=&gt;</span> <span class="n">fullString</span> <span class="p">+=</span> <span class="p">(</span><span class="n">i</span><span class="p">.</span><span class="nf">ToString</span><span class="p">())</span> <span class="p">+</span> <span class="sc">'\n'</span><span class="p">);</span>
+</code></pre>
 <h2 id="when-things-go-wrong">When Things Go Wrong</h2>
 
 <p>Entity Framework is not perfect.</p>
@@ -454,7 +440,21 @@ You can check the contents of those files and see the effects of running <code c
 
 <p>You can&rsquo;t just run <code class="prettyprint">Add-Migration MyNewMigration</code> and assume everything will work out fine. You need to check to make sure that the generated code works correctly.</p>
 
-<h2 id="erasing-everything-the-easiest-way-to-fix-a-problem">Erasing Everything - The Easiest Way to Fix a Problem</h2>
+<h3 id="debugging-the-update-database-command">Debugging the Update-Database command</h3>
+
+<p>Running the Update-Database command meant that debugging statments like <code class="prettyprint">Debug.WriteLine()</code> didn&rsquo;t work. Instead I threw an error:</p>
+<pre class="highlight csharp tab-csharp"><code><span class="k">throw</span> <span class="k">new</span> <span class="nf">Exception</span><span class="p">(</span><span class="n">fullString</span><span class="p">);</span>
+</code></pre>
+<p>Then I could see I couldn&rsquo;t access the resource since:</p>
+
+<ol>
+<li>It was saved in the wrong namespace.&nbsp;</li>
+<li>It&rsquo;s build action was set to <code class="prettyprint">Resource</code> instead of <code class="prettyprint">Embedded Resource</code>.&nbsp;</li>
+</ol>
+
+<p>After I fixed these mistakes I could easily Seed from a CSV.</p>
+
+<h3 id="erasing-everything-the-easiest-way-to-fix-a-problem">Erasing Everything - The Easiest Way to Fix a Problem</h3>
 
 <p>You can simply delete the database and migrations history. Obviously this is not a viable solution for production code, but it&rsquo;s often the easiest solution for development code.</p>
 
@@ -470,9 +470,22 @@ You can check the contents of those files and see the effects of running <code c
 
 <h2 id="errors">Errors</h2>
 
+<h3 id="error-there-is-already-an-object-named-modelname-in-the-database">Error: <code class="prettyprint">There is already an object named &#39;ModelName&#39; in the database.</code></h3>
+
 <h3 id="error-sequence-contains-more-than-one-element">Error: <code class="prettyprint">Sequence contains more than one element.</code></h3>
 
-<h3 id="error-there-is-already-an-object-named-modelname-in-the-database">Error: <code class="prettyprint">There is already an object named &#39;ModelName&#39; in the database.</code></h3>
+<p>https://docs.microsoft.com/en-us/aspnet/mvc/overview/getting-started/getting-started-with-ef-using-mvc/migrations-and-deployment-with-the-entity-framework-in-an-asp-net-mvc-application#enable-code-first-migrations</p>
+
+<p>The first parameter passed to the AddOrUpdate method specifies the property to use to check if a row already exists. For the test student data that you are providing, the LastName property can be used for this purpose since each last name in the list is unique:
+C#Copy
+context.Students.AddOrUpdate(p =&gt; p.LastName, s)</p>
+
+<p>This code assumes that last names are unique. If you manually add a student with a duplicate last name, you&rsquo;ll get the following exception the next time you perform a migration.
+Sequence contains more than one element</p>
+
+<p>https://blogs.msdn.microsoft.com/rickandy/2013/02/12/seeding-and-debugging-entity-framework-ef-dbs/</p>
+
+<p>So it was a Seed error. But it doesn’t cause any big problems. It just means I can’t add the extra data. That’s not a problem, is it?</p>
 
 <h1 id="views">Views</h1>
 
@@ -482,12 +495,12 @@ You can check the contents of those files and see the effects of running <code c
 <p>The key transition character in Razor is the “at” sign (@). This single character is used to transition from markup to code.</p>
 </blockquote>
 
-<p>The @ transition symbol effectively works as a <code class="prettyprint">console.log</code> or <code class="prettyprint">println()</code> mechanism.</p>
+<p>The <code class="prettyprint">@</code> transition symbol effectively works as a <code class="prettyprint">console.log</code> or <code class="prettyprint">println()</code> mechanism.</p>
 
 <p>Code that is encased in curly brackets will be executed. Code that&rsquo;s simply preceded by <code class="prettyprint">@</code> will be outputted.</p>
-<pre class="highlight csharp tab-csharp"><code><span class="err">@</span><span class="p">{</span><span class="kt">var</span> <span class="n">test</span> <span class="p">=</span> <span class="m">10</span><span class="p">;</span> <span class="p">}</span>
-<span class="err">@</span><span class="p">{</span><span class="n">test</span> <span class="p">=</span> <span class="n">test</span> <span class="p">-</span><span class="m">1</span><span class="p">;}</span>
-<span class="n">@test</span> <span class="c1">// 9</span>
+<pre class="highlight liquid tab-liquid"><code>@{var test = 10; }
+@{test = test -1;}
+@test // 9
 </code></pre>
 <p>By including a @model statement at the top of the view template file, you can specify the type of object that the view expects.</p>
 
@@ -563,6 +576,20 @@ drive, a relationship exists between the URL and a method on a controller class<
 registration</p>
 
 <p>A controller can pass data or objects to a view template using the <code class="prettyprint">ViewBag</code> object. The <code class="prettyprint">ViewBag</code> is a dynamic object that provides a convenient late-bound way to pass information to a view.</p>
+
+<h2 id="creating-a-bulkcreate-method">Creating a <code class="prettyprint">BulkCreate</code> method</h2>
+
+<p>https://docs.microsoft.com/en-us/aspnet/mvc/overview/getting-started/introduction/adding-a-view</p>
+
+<blockquote>
+<p>Controller methods (also known as action methods), such as the Index method above, generally return an ActionResult (or a class derived from ActionResult), not primitive types like string.</p>
+
+<p>simply ran the statement return View(), which specified that the method should use a view template file to render a response to the browser. Because you didn&rsquo;t explicitly specify the name of the view template file to use, ASP.NET MVC defaulted to using the Index.cshtml view file in the \Views\HelloWorld folder. The image below shows the string &ldquo;Hello from our View Template!&rdquo; hard-coded in the view.</p>
+</blockquote>
+
+<p>ASP.NET controller scaffolding will create <code class="prettyprint">Create</code> action methods for both GET and POST requests.</p>
+
+<p>But what about if you want to bulk create items?</p>
 
   </div>
   <div class="dark-box">
