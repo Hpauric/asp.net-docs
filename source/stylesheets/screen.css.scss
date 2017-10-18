@@ -67,7 +67,7 @@ body {
   bottom: 0;
   width: $nav-width;
   background-color: $nav-bg;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: bold; // language selector for mobile devices
   .lang-selector {
     display: none;
@@ -341,6 +341,7 @@ body {
   // to place content above the dark box
   position: relative;
   z-index: 30;
+  
 
   &:after {
     content: '';
@@ -494,7 +495,7 @@ body {
   dt,
   dd {
     line-height: 1.6;
-    margin-top: 0;
+    margin-top: 10px;
   }
 
   img {
@@ -503,7 +504,7 @@ body {
   }
 
   code.prettyprint {
-    font-size: 15px;
+    font-size: 14px;
   }
 
 
@@ -581,9 +582,9 @@ body {
 
     padding: 2em $main-padding;
     margin: 0;
-    width: $examples-width;
-
-    float: right;
+    //width: $examples-width;
+    width: 100%;
+    // float: right;
     clear: right;
 
     box-sizing: border-box;

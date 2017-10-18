@@ -1,2400 +1,374 @@
 ---
-title: Chai API Reference
+title: ASP.NET Reference
 
 toc_footers:
-  - <a href='http://chaijs.com/api/'>Original Chai Documentation</a>
+  - <a href='https://docs.microsoft.com/en-us/aspnet/mvc/overview/getting-started/getting-started-with-ef-using-mvc/'>EF6 Code First</a>
   - <a href='https://github.com/tripit/slate'>Documentation Powered by Slate</a>
 
 search: true
 ---
 
-# Introduction
+# C\# Basics
 
-The Chai API is broken down by style or task.
+## Attributes
 
-## Assertion Styles
+Attributes are effectively metadata that describe the property, method or class that they precede. They are encased in square brackets.
 
-The Expect / Should API covers the BDD assertion styles.
-The Assert API covers the TDD assertion style.
-
-## Plugins
-
-The Plugin API will be of use to anyone interested in building plugins as helpers to DRY up your tests, or for release to the community.
-
-## Tools
-
-The Online Test Suite is a live run of Chai’s test suite. Use it to ensure browser compatibility.
-
-# Assert
-
-The assert style is very similar to node.js’ included assert module, with a bit of extra sugar. 
-Of the three style options, assert is the only one that is not chainable. Check out the [Style Guide](http://chaijs.com/guide/styles/) for a comparison.
-
-## Equals Tests
-
-###equal
-
-```javascript
-assert.equal(3, '3', '== coerces values to strings');
-```
-`.equal(actual, expected, [message])`
-
-Asserts non-strict equality (`==`) of `actual` and `expected`.
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  actual | Mixed | 
-|  expected | Mixed | 
-|  message | String | 
-
-
-###notEqual
-
-```javascript
-assert.notEqual(3, 4, 'these numbers are not equal');
-```
-`.notEqual(actual, expected, [message])`
-
-Asserts non-strict inequality (`!=`) of `actual` and `expected`.
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  actual | Mixed | 
-|  expected | Mixed | 
-|  message | String | 
-
-| Parameter | Type |
-| ------------- | ------------- |
-| actual  | Mixed  |
-| expected| Mixed  |
-| message (optional)| String  |
-
-
-###strictEqual
-
-
-```javascript
-assert.strictEqual(true, true, 'these booleans are strictly equal');
-```
-`.strictEqual(actual, expected, [message])`
-
-Asserts strict equality (`===`) of `actual` and `expected`.
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  actual | Mixed | 
-|  expected | Mixed | 
-|  message | String | 
-
-
-###notStrictEqual
-
-```javascript
-assert.notStrictEqual(3, '3', 'no coercion for strict equality');
-```
-`.notStrictEqual(actual, expected, [message])`
-
-Asserts strict inequality (`!==`) of `actual` and `expected`.
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  actual | Mixed | 
-|  expected | Mixed | 
-|  message | String | 
-
-
-###deepEqual
-
-```javascript
-assert.deepEqual({ tea: 'green' }, { tea: 'green' });
-```
-`.deepEqual(actual, expected, [message])`
-
-Asserts that `actual` is deeply equal to `expected`.
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  actual | Mixed | 
-|  expected | Mixed | 
-|  message | String | 
-
-
-###notDeepEqual
-
-```javascript
-assert.notDeepEqual({ tea: 'green' }, { tea: 'jasmine' });
-```
-`.notDeepEqual(actual, expected, [message])`
-
-Assert that `actual` is not deeply equal to `expected`.
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  actual | Mixed | 
-|  expected | Mixed | 
-|  message | String | 
-
-## Number Tests
-
-###isAbove
-
-```javascript
-assert.isAbove(5, 2, '5 is strictly greater than 2');
-```
-`.isAbove(valueToCheck, valueToBeAbove, [message])`
-
-Asserts `valueToCheck` is strictly greater than (>) `valueToBeAbove`.
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  valueToCheck | Mixed | 
-|  valueToBeAbove | Mixed | 
-|  message | String | 
-
-
-###isAtLeast
-
-```javascript
-assert.isAtLeast(5, 2, '5 is greater or equal to 2');
-assert.isAtLeast(3, 3, '3 is greater or equal to 3');
-```
-`.isAtLeast(valueToCheck, valueToBeAtLeast, [message])`
-
-
-Asserts `valueToCheck` is greater than or equal to (>=) `valueToBeAtLeast`.
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  valueToCheck | Mixed | 
-|  valueToBeAtLeast | Mixed | 
-|  message | String | 
-
-
-###isBelow
-
-```javascript
-assert.isBelow(3, 6, '3 is strictly less than 6');
-```
-`.isBelow(valueToCheck, valueToBeBelow, [message])`
-
-Asserts `valueToCheck` is strictly less than (<) `valueToBeBelow`.
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  valueToCheck | Mixed | 
-|  valueToBeBelow | Mixed | 
-|  message | String | 
-
-
-###isAtMost
-
-```javascript
-assert.isAtMost(3, 6, '3 is less than or equal to 6');
-assert.isAtMost(4, 4, '4 is less than or equal to 4');
-```
-`.isAtMost(valueToCheck, valueToBeAtMost, [message])`
-
-Asserts `valueToCheck` is less than or equal to (<=) `valueToBeAtMost`.
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  valueToCheck | Mixed | 
-|  valueToBeAtMost | Mixed | 
-|  message | String | 
-
-###isNaN
-
-```javascript
-assert.isNaN(NaN, 'NaN is NaN');
-```
-`.isNaN(valueToCheck, [message])`
-
-Asserts that value is NaN.
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  value | Mixed | 
-|  message | String | 
-
-
-###isNotNaN
-
-```javascript
-assert.isNotNaN(4, '4 is not NaN');
-```
-`.isNotNaN`
-Asserts that value is not NaN.
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  value | Mixed | 
-|  message | String | 
-
-###isFinite
-
-```javascript
-var cups = 2;
-assert.isFinite(cups, 'how many cups');
-assert.isFinite(NaN); // throws
-```
-`.isFinite(value, [message])`
-
-Asserts that `value` is a finite number. Unlike `.isNumber`, this will fail for `NaN` and `Infinity`.
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  value | Number | 
-|  message | String | 
-
-###closeTo
-
-```javascript
-assert.closeTo(1.5, 1, 0.5, 'numbers are close');
-```
-
-`.closeTo(actual, expected, delta, [message])`
-
-Asserts that the target is equal `expected`, to within a +/- `delta` range.
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  actual | Number | 
-|  expected | Number | 
-|  delta | Number | 
-|  message | String | 
-
-
-###approximately
-
-```javascript
-assert.approximately(1.5, 1, 0.5, 'numbers are close');
-```
-
-`.approximately(actual, expected, delta, [message])`
-
-Asserts that the target is equal `expected`, to within a +/- `delta` range.
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  actual | Number | 
-|  expected | Number | 
-|  delta | Number | 
-|  message | String | 
-
-
-## True/False Tests
-
-###isOk
-
-```javascript
-assert.isOk('everything', 'everything is ok');
-assert.isOk(false, 'this will fail');
-```
-
-`.isOk(object, [message])`
-
-Asserts that `object` is truthy.
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  object to test | Mixed | 
-|  message | String | 
-
-
-###isNotOk
-
-```javascript
-assert.isNotOk('everything', 'this will fail');
-assert.isNotOk(false, 'this will pass');
-```
-
-`.isNotOk(object, [message])`
-
-Asserts that `object` is falsy.
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  object to test | Mixed | 
-|  message | String | 
-
-###isTrue
-
-```javascript
-var teaServed = true;
-assert.isTrue(teaServed, 'the tea has been served');
-```
-
-`.isTrue(value, [message])`
-
-Asserts that `value` is true.
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  value | Mixed | 
-|  message | String | 
-
-
-###isNotTrue
-
-```javascript
-var tea = 'tasty chai';
-assert.isNotTrue(tea, 'great, time for tea!');
-```
-
-`.isNotTrue(value, [message])`
-
-Asserts that `value` is not true.
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  value | Mixed | 
-|  message | String | 
-
-
-###isFalse
-
-```javascript
-var teaServed = false;
-assert.isFalse(teaServed, 'no tea yet? hmm...');
-```
-
-`.isFalse(value, [message])`
-
-Asserts that `value` is false.
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  value | Mixed | 
-|  message | String | 
-
-
-###isNotFalse
-
-```javascript
-var tea = 'tasty chai';
-assert.isNotFalse(tea, 'great, time for tea!');
-```
-
-`.isNotFalse(value, [message])`
-
-Asserts that `value` is not false.
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  value | Mixed | 
-|  message | String | 
-
-## Typeof Tests
-
-
-###isNull
-
-```javascript
-assert.isNull(err, 'there was no error');
-```
-
-`.isNull(value, [message])`
-
-Asserts that `value` is null.
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  value | Mixed | 
-|  message | String | 
-
-
-###isNotNull
-
-```javascript
-var tea = 'tasty chai';
-assert.isNotNull(tea, 'great, time for tea!');
-```
-
-`.isNotNull(value, [message])`
-
-Asserts that `value` is not null.
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  value | Mixed | 
-|  message | String | 
-
-###exists
-
-```javascript
-var foo = 'hi';
-assert.exists(foo, 'foo is neither `null` nor `undefined`');
-```
-
-`.exists(value, [message])`
-
-Asserts that the target is neither `null` nor `undefined`.
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  value | Mixed | 
-|  message | String | 
-
-
-###notExists
-
-```javascript
-var bar = null
-  , baz;
-
-assert.notExists(bar);
-assert.notExists(baz, 'baz is either null or undefined');
-```
-
-`.notExists(value, [message])`
-
-Asserts that the target is either `null` or `undefined`.
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  value | Mixed | 
-|  message | String | 
-
-
-###isUndefined
-
-```javascript
-var tea;
-assert.isUndefined(tea, 'no tea defined');
-```
-
-`.isUndefined(value, [message])`
-
-Asserts that `value` is `undefined`.
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  value | Mixed | 
-|  message | String | 
-
-
-###isDefined
-
-```javascript
-var tea = 'cup of chai';
-assert.isDefined(tea, 'tea has been defined');
-```
-
-`.isDefined(value, [message])`
-
-Asserts that `value` is not `undefined`.
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  value | Mixed | 
-|  message | String | 
-
-
-###isFunction
-
-```javascript
-function serveTea() { return 'cup of tea'; };
-assert.isFunction(serveTea, 'great, we can have tea now');
-```
-
-`.isFunction(value, [message])`
-
-Asserts that `value` is a function.
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  value | Mixed | 
-|  message | String | 
-
-
-###isNotFunction
-
-
-```javascript
-var serveTea = [ 'heat', 'pour', 'sip' ];
-assert.isNotFunction(serveTea, 'great, we have listed the steps');
-```
-
-`.isNotFunction(value, [message])`
-
-Asserts that `value` is _not_ a function.
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  value | Mixed | 
-|  message | String | 
-
-
-###isObject
-
-```javascript
-var selection = { name: 'Chai', serve: 'with spices' };
-assert.isObject(selection, 'tea selection is an object');
-```
-
-####`.isObject(value, [message])`
-
-Asserts that `value` is an object of type 'Object' (as revealed by `Object.prototype.toString`).
-_The assertion does not match subclassed objects._
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  value | Mixed | 
-|  message | String | 
-
-
-###isNotObject
-
-```javascript
-var selection = 'chai'
-assert.isNotObject(selection, 'tea selection is not an object');
-assert.isNotObject(null, 'null is not an object');
-```
-
-`.isNotObject(value, [message])`
-
-Asserts that `value` is _not_ an object of type 'Object' (as revealed by `Object.prototype.toString`).
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  value | Mixed | 
-|  message | String | 
-
-
-###isArray
-
-```javascript
-var menu = [ 'green', 'chai', 'oolong' ];
-assert.isArray(menu, 'what kind of tea do we want?');
-```
-
-`.isArray(value, [message])`
-
-Asserts that `value` is an array.
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  value | Mixed | 
-|  message | String | 
-
-
-###isNotArray
-
-```javascript
-var menu = 'green|chai|oolong';
-assert.isNotArray(menu, 'what kind of tea do we want?');
-```
-
-`.isNotArray(value, [message])`
-
-Asserts that `value` is _not_ an array.
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  value | Mixed | 
-|  message | String | 
-
-
-###isString
-
-`.isString(value, [message])`
-
-Asserts that `value` is a string.
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  value | Mixed | 
-|  message | String | 
-
-
-```javascript
-var teaOrder = 'chai';
-assert.isString(teaOrder, 'order placed');
-```
-
-###isNotString
-
-```javascript
-var teaOrder = 4;
-assert.isNotString(teaOrder, 'order placed');
-```
-
-`.isNotString(value, [message])`
-
-Asserts that `value` is _not_ a string.
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  value | Mixed | 
-|  message | String | 
-
-###isNumber
-
-```javascript
-var cups = 2;
-assert.isNumber(cups, 'how many cups');
-```
-
-`.isNumber(value, [message])`
-
-Asserts that `value` is a number.
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  value | Number | 
-|  message | String | 
-
-
-###isNotNumber
-
-`.isNotNumber(value, [message])`
-
-Asserts that `value` is _not_ a number.
-
-```javascript
-var cups = '2 cups please';
-assert.isNotNumber(cups, 'how many cups');
-```
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  value | Mixed | 
-|  message | String | 
-
-###isBoolean
-
-```javascript
-var teaReady = true
-  , teaServed = false;
-
-assert.isBoolean(teaReady, 'is the tea ready');
-assert.isBoolean(teaServed, 'has tea been served');
-```
-
-`.isBoolean(value, [message])`
-
-Asserts that `value` is a boolean.
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  value | Mixed | 
-|  message | String | 
-
-###isNotBoolean
-
-```javascript
-var teaReady = 'yep'
-  , teaServed = 'nope';
-
-assert.isNotBoolean(teaReady, 'is the tea ready');
-assert.isNotBoolean(teaServed, 'has tea been served');
-```
-
-`.isNotBoolean(value, [message])`
-
-Asserts that `value` is _not_ a boolean.
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  value | Mixed | 
-|  message | String | 
-
-
-###typeOf
-
-```javascript
-assert.typeOf({ tea: 'chai' }, 'object', 'we have an object');
-assert.typeOf(['chai', 'jasmine'], 'array', 'we have an array');
-assert.typeOf('tea', 'string', 'we have a string');
-assert.typeOf(/tea/, 'regexp', 'we have a regular expression');
-assert.typeOf(null, 'null', 'we have a null');
-assert.typeOf(undefined, 'undefined', 'we have an undefined');
-```
-
-`.typeOf(value, name, [message])`
-
-Asserts that `value`'s type is `name`, as determined by `Object.prototype.toString`.
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  value | Mixed | 
-|  name | String | 
-|  message | String | 
-
-
-###notTypeOf
-
-```javascript
-assert.notTypeOf('tea', 'number', 'strings are not numbers');
-```
-
-`.notTypeOf(value, name, [message])`
-
-Asserts that `value`'s type is _not_ `name`, as determined by
-`Object.prototype.toString`.
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  value | Mixed | 
-|  typeof name | String | 
-|  message | String | 
-
-## Object Constructor Tests
-
-###instanceOf
-
-```javascript
-var Tea = function (name) { this.name = name; }
-  , chai = new Tea('chai');
-
-assert.instanceOf(chai, Tea, 'chai is an instance of tea');
-```
-
-`.instanceOf(object, constructor, [message])`
-
-Asserts that `value` is an instance of `constructor`.
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  object | Object | 
-|  constructor | Constructor | 
-|  message | String | 
-
-
-###notInstanceOf
-`.notInstanceOf(object, constructor, [message])`
-
-Asserts `value` is not an instance of `constructor`.
-
-```javascript
-var Tea = function (name) { this.name = name; }
-  , chai = new String('chai');
-
-assert.notInstanceOf(chai, Tea, 'chai is not an instance of tea');
-```
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  object | Object | 
-|  constructor | Constructor | 
-|  message | String | 
-
-
-## Includes Tests
-
-###include
-`.include(haystack, needle, [message])`
-
-
-Asserts that `haystack` includes `needle`. Can be used to assert the
-inclusion of a value in an array, a substring in a string, or a subset of
-properties in an object.
-
-```javascript
-assert.include([1,2,3], 2, 'array contains value');
-assert.include('foobar', 'foo', 'string contains substring');
-assert.include({ foo: 'bar', hello: 'universe' }, { foo: 'bar' }, 'object contains property');
-```
-
-Strict equality (===) is used. When asserting the inclusion of a value in
-an array, the array is searched for an element that's strictly equal to the
-given value. When asserting a subset of properties in an object, the object
-is searched for the given property keys, checking that each one is present
-and stricty equal to the given property value. For instance:
-
-```javascript
-var obj1 = {a: 1}
-, obj2 = {b: 2};
-assert.include([obj1, obj2], obj1); 
-assert.include({foo: obj1, bar: obj2}, {foo: obj1});
-assert.include({foo: obj1, bar: obj2}, {foo: obj1, bar: obj2});
-```
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  haystack | Array&#124;String | 
-|  needle | Mixed | 
-|  message | String | 
-
-
-###notInclude
-`.notInclude(haystack, needle, [message])`
-
-
-Asserts that `haystack` does not include `needle`. Can be used to assert
-the absence of a value in an array, a substring in a string, or a subset of
-properties in an object.
-
-```javascript
-assert.notInclude([1,2,3], 4, 'array doesn't contain value');
-assert.notInclude('foobar', 'baz', 'string doesn't contain substring');
-assert.notInclude({ foo: 'bar', hello: 'universe' }, { foo: 'baz' }, 'object doesn't contain property');
-```
-
-Strict equality (===) is used. When asserting the absence of a value in an
-array, the array is searched to confirm the absence of an element that's
-strictly equal to the given value. When asserting a subset of properties in
-an object, the object is searched to confirm that at least one of the given
-property keys is either not present or not strictly equal to the given
-property value. For instance:
-
-```javascript
-var obj1 = {a: 1}
-  , obj2 = {b: 2};
-assert.notInclude([obj1, obj2], {a: 1});
-assert.notInclude({foo: obj1, bar: obj2}, {foo: {a: 1}});
-assert.notInclude({foo: obj1, bar: obj2}, {foo: obj1, bar: {b: 2}});
-```
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  haystack | Array &#124; String | 
-|  needle | Mixed | 
-|  message | String | 
-
-
-###deepInclude
-`.deepInclude(haystack, needle, [message])`
-
-
-Asserts that `haystack` includes `needle`. Can be used to assert the
-inclusion of a value in an array or a subset of properties in an object.
-Deep equality is used.
-
-```javascript
-var obj1 = {a: 1}
-  , obj2 = {b: 2};
-assert.deepInclude([obj1, obj2], {a: 1});
-assert.deepInclude({foo: obj1, bar: obj2}, {foo: {a: 1}});
-assert.deepInclude({foo: obj1, bar: obj2}, {foo: {a: 1}, bar: {b: 2}});
-```
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  haystack | Array &#124; String | 
-|  needle | Mixed | 
-|  message | String | 
-
-
-###notDeepInclude
-`.notDeepInclude(haystack, needle, [message])`
-
-
-Asserts that `haystack` does not include `needle`. Can be used to assert
-the absence of a value in an array or a subset of properties in an object.
-Deep equality is used.
-
-```javascript
-var obj1 = {a: 1}
-  , obj2 = {b: 2};
-assert.notDeepInclude([obj1, obj2], {a: 9});
-assert.notDeepInclude({foo: obj1, bar: obj2}, {foo: {a: 9}});
-assert.notDeepInclude({foo: obj1, bar: obj2}, {foo: {a: 1}, bar: {b: 9}});
-```
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  haystack | Array &#124; String | 
-|  needle | Mixed | 
-|  message | String | 
-
-
-###nestedInclude
-`.nestedInclude(haystack, needle, [message])`
-
-
-Asserts that 'haystack' includes 'needle'. 
-Can be used to assert the inclusion of a subset of properties in an 
-object.
-Enables the use of dot- and bracket-notation for referencing nested 
-properties.
-'[]' and '.' in property names can be escaped using double backslashes.
-
-```javascript
-assert.nestedInclude({'.a': {'b': 'x'}}, {'\\.a.[b]': 'x'});
-assert.nestedInclude({'a': {'[b]': 'x'}}, {'a.\\[b\\]': 'x'});
-```
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  haystack | Object | 
-|  needle | Object | 
-|  message | String | 
-
-
-###notNestedInclude
-`.notNestedInclude(haystack, needle, [message])`
-
-Asserts that 'haystack' does not include 'needle'. 
-Can be used to assert the absence of a subset of properties in an 
-object.
-Enables the use of dot- and bracket-notation for referencing nested 
-properties. 
-'[]' and '.' in property names can be escaped using double backslashes.
-
-```javascript
-assert.notNestedInclude({'.a': {'b': 'x'}}, {'\\.a.b': 'y'});
-assert.notNestedInclude({'a': {'[b]': 'x'}}, {'a.\\[b\\]': 'y'});
-```
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  haystack | Object | 
-|  needle | Object | 
-|  message | String | 
-
-
-###deepNestedInclude
-`.deepNestedInclude(haystack, needle, [message])`
-
-Asserts that 'haystack' includes 'needle'.
-Can be used to assert the inclusion of a subset of properties in an 
-object while checking for deep equality.
-Enables the use of dot- and bracket-notation for referencing nested 
-properties.
-'[]' and '.' in property names can be escaped using double backslashes.
-
-```javascript
-assert.deepNestedInclude({a: {b: [{x: 1}]}}, {'a.b[0]': {x: 1}});
-assert.deepNestedInclude({'.a': {'[b]': {x: 1}}}, {'\\.a.\\[b\\]': {x: 1}});
-```
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  haystack | Object | 
-|  needle | Object | 
-|  message | String | 
-
-
-###notDeepNestedInclude
-`.notDeepNestedInclude(haystack, needle, [message])`
-
-Asserts that 'haystack' does not include 'needle'.
-Can be used to assert the absence of a subset of properties in an 
-object while checking for deep equality.
-Enables the use of dot- and bracket-notation for referencing nested 
-properties.
-'[]' and '.' in property names can be escaped using double backslashes.
-
-```javascript
-assert.notDeepNestedInclude({a: {b: [{x: 1}]}}, {'a.b[0]': {y: 1}})
-assert.notDeepNestedInclude({'.a': {'[b]': {x: 1}}}, {'\\.a.\\[b\\]': {y: 2}});
-```
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  haystack | Object | 
-|  needle | Object | 
-|  message | String | 
-
-
-###ownInclude
-`.ownInclude(haystack, needle, [message])`
-
-Asserts that 'haystack' includes 'needle'.
-Can be used to assert the inclusion of a subset of properties in an 
-object while ignoring inherited properties.
-
-```javascript
-assert.ownInclude({ a: 1 }, { a: 1 });
-```
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  haystack | Object | 
-|  needle | Object | 
-|  message | String | 
-
-
-###notOwnInclude
-`.notOwnInclude(haystack, needle, [message])`
-
-Asserts that 'haystack' includes 'needle'.
-Can be used to assert the absence of a subset of properties in an 
-object while ignoring inherited properties.
-
-```javascript
-Object.prototype.b = 2;
-
-assert.notOwnInclude({ a: 1 }, { b: 2 });
-```
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  haystack | Object | 
-|  needle | Object | 
-|  message | String | 
-
-
-###deepOwnInclude
-`.deepOwnInclude(haystack, needle, [message])`
-
-Asserts that 'haystack' includes 'needle'.
-Can be used to assert the inclusion of a subset of properties in an 
-object while ignoring inherited properties and checking for deep equality.
-
-```javascript
- assert.deepOwnInclude({a: {b: 2}}, {a: {b: 2}});
-```
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  haystack | Object | 
-|  needle | Object | 
-|  message | String | 
-
-
-###notDeepOwnInclude
-`.notDeepOwnInclude(haystack, needle, [message])`
-
-Asserts that 'haystack' includes 'needle'.
-Can be used to assert the absence of a subset of properties in an 
-object while ignoring inherited properties and checking for deep equality.
-
-```javascript
- assert.notDeepOwnInclude({a: {b: 2}}, {a: {c: 3}});
-```
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  haystack | Object | 
-|  needle | Object | 
-|  message | String | 
-
-## Regex Tests
-
-
-###match
-`.match(value, regexp, [message])`
-
-Asserts that `value` matches the regular expression `regexp`.
-
-```javascript
-assert.match('foobar', /^foo/, 'regexp matches');
-```
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  value | Mixed | 
-|  regexp | RegExp | 
-|  message | String | 
-
-
-###notMatch
-`.notMatch(value, regexp, [message])`
-
-Asserts that `value` does not match the regular expression `regexp`.
-
-```javascript
-assert.notMatch('foobar', /^foo/, 'regexp does not match');
-```
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  value | Mixed | 
-|  regexp | RegExp | 
-|  message | String | 
-
-
-## Object Property Tests
-
-###property
-`.property(object, property, [message])`
-
-Asserts that `object` has a direct or inherited property named by
-`property`.
-
-```javascript
-assert.property({ tea: { green: 'matcha' }}, 'tea');
-assert.property({ tea: { green: 'matcha' }}, 'toString');
-```
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  object | Object | 
-|  property | String | 
-|  message | String | 
-
-
-###notProperty
-`.notProperty(object, property, [message])`
-
-Asserts that `object` does _not_ have a direct or inherited property named
-by `property`.
-
-```javascript
-assert.notProperty({ tea: { green: 'matcha' }}, 'coffee');
-```
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  object | Object | 
-|  property | String | 
-|  message | String | 
-
-
-###propertyVal
-`.propertyVal(object, property, value, [message])`
-
-Asserts that `object` has a direct or inherited property named by
-`property` with a value given by `value`. Uses a strict equality check
-(===).
-
-```javascript
-assert.propertyVal({ tea: 'is good' }, 'tea', 'is good');
-```
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  object | Object | 
-|  property | String | 
-|  value | Mixed | 
-|  message | String | 
-
-
-###notPropertyVal
-`.notPropertyVal(object, property, value, [message])`
-
-Asserts that `object` does _not_ have a direct or inherited property named
-by `property` with value given by `value`. Uses a strict equality check
-(===).
-
-```javascript
-assert.notPropertyVal({ tea: 'is good' }, 'tea', 'is bad');
-assert.notPropertyVal({ tea: 'is good' }, 'coffee', 'is good');
-```
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  object | Object | 
-|  property | String | 
-|  value | Mixed | 
-|  message | String | 
-
-
-###deepPropertyVal
-`.deepPropertyVal(object, property, value, [message])`
-
-Asserts that `object` has a direct or inherited property named by
-`property` with a value given by `value`. Uses a deep equality check.
-
-```javascript
-assert.deepPropertyVal({ tea: { green: 'matcha' } }, 'tea', { green: 'matcha' });
-```
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  object | Object | 
-|  property | String | 
-|  value | Mixed | 
-|  message | String | 
-
-
-###notDeepPropertyVal
-`.notDeepPropertyVal(object, property, value, [message])`
-
-Asserts that `object` does _not_ have a direct or inherited property named
-by `property` with value given by `value`. Uses a deep equality check.
-
-```javascript
-assert.notDeepPropertyVal({ tea: { green: 'matcha' } }, 'tea', { black: 'matcha' });
-assert.notDeepPropertyVal({ tea: { green: 'matcha' } }, 'tea', { green: 'oolong' });
-assert.notDeepPropertyVal({ tea: { green: 'matcha' } }, 'coffee', { green: 'matcha' });
-```
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  object | Object | 
-|  property | String | 
-|  value | Mixed | 
-|  message | String | 
-
-
-###nestedProperty
-`.nestedProperty(object, property, [message])`
-
-Asserts that `object` has a direct or inherited property named by
-`property`, which can be a string using dot- and bracket-notation for
-nested reference.
-
-```javascript
-assert.nestedProperty({ tea: { green: 'matcha' }}, 'tea.green');
-```
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  object | Object | 
-|  property | String | 
-|  message | String | 
-
-
-###notNestedProperty
-`.notNestedProperty(object, property, [message])`
-
-Asserts that `object` does _not_ have a property named by `property`, which
-can be a string using dot- and bracket-notation for nested reference. The
-property cannot exist on the object nor anywhere in its prototype chain.
-
-```javascript
-assert.notNestedProperty({ tea: { green: 'matcha' }}, 'tea.oolong');
-```
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  object | Object | 
-|  property | String | 
-|  message | String | 
-
-
-###nestedPropertyVal
-`.nestedPropertyVal(object, property, value, [message])`
-
-Asserts that `object` has a property named by `property` with value given
-by `value`. `property` can use dot- and bracket-notation for nested
-reference. Uses a strict equality check (===).
-
-```javascript
-assert.nestedPropertyVal({ tea: { green: 'matcha' }}, 'tea.green', 'matcha');
-```
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  object | Object | 
-|  property | String | 
-|  value | Mixed | 
-|  message | String | 
-
-
-###notNestedPropertyVal
-`.notNestedPropertyVal(object, property, value, [message])`
-
-Asserts that `object` does _not_ have a property named by `property` with
-value given by `value`. `property` can use dot- and bracket-notation for
-nested reference. Uses a strict equality check (===).
-
-```javascript
-assert.notNestedPropertyVal({ tea: { green: 'matcha' }}, 'tea.green', 'konacha');
-assert.notNestedPropertyVal({ tea: { green: 'matcha' }}, 'coffee.green', 'matcha');
-```
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  object | Object | 
-|  property | String | 
-|  value | Mixed | 
-|  message | String | 
-
-
-###deepNestedPropertyVal
-`.deepNestedPropertyVal(object, property, value, [message])`
-
-Asserts that `object` has a property named by `property` with a value given
-by `value`. `property` can use dot- and bracket-notation for nested
-reference. Uses a deep equality check.
-
-```javascript
-assert.deepNestedPropertyVal({ tea: { green: { matcha: 'yum' } } }, 'tea.green', { matcha: 'yum' });
-```
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  object | Object | 
-|  property | String | 
-|  value | Mixed | 
-|  message | String | 
-
-
-###notDeepNestedPropertyVal
-`.notDeepNestedPropertyVal(object, property, value, [message])`
-
-Asserts that `object` does _not_ have a property named by `property` with
-value given by `value`. `property` can use dot- and bracket-notation for
-nested reference. Uses a deep equality check.
-
-```javascript
-assert.notDeepNestedPropertyVal({ tea: { green: { matcha: 'yum' } } }, 'tea.green', { oolong: 'yum' });
-assert.notDeepNestedPropertyVal({ tea: { green: { matcha: 'yum' } } }, 'tea.green', { matcha: 'yuck' });
-assert.notDeepNestedPropertyVal({ tea: { green: { matcha: 'yum' } } }, 'tea.black', { matcha: 'yum' });
-```
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  object | Object | 
-|  property | String | 
-|  value | Mixed | 
-|  message | String | 
-
-
-
-
-## Object Key Tests
-
-###hasAnyKeys
-`.hasAnyKeys(object, [keys], [message])`
-
-Asserts that `object` has at least one of the `keys` provided.
-You can also provide a single object instead of a `keys` array and its keys
-will be used as the expected set of keys.
-
-```javascript
-assert.hasAnyKey({foo: 1, bar: 2, baz: 3}, ['foo', 'iDontExist', 'baz']);
-assert.hasAnyKey({foo: 1, bar: 2, baz: 3}, {foo: 30, iDontExist: 99, baz: 1337]);
-assert.hasAnyKey(new Map([[{foo: 1}, 'bar'], ['key', 'value']]), [{foo: 1}, 'thisKeyDoesNotExist']);
-assert.hasAnyKey(new Set([{foo: 'bar'}, 'anotherKey'], [{foo: 'bar'}, 'thisKeyDoesNotExist']);
-```
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  object | Mixed | 
-|  keys | Array&#124;Object | 
-|  message | String | 
-
-
-###hasAllKeys
-`.hasAllKeys(object, [keys], [message])`
-
-Asserts that `object` has all and only all of the `keys` provided.
-You can also provide a single object instead of a `keys` array and its keys
-will be used as the expected set of keys.
-
-```javascript
-assert.hasAllKeys({foo: 1, bar: 2, baz: 3}, ['foo', 'bar', 'baz']);
-assert.hasAllKeys({foo: 1, bar: 2, baz: 3}, {foo: 30, bar: 99, baz: 1337]);
-assert.hasAllKeys(new Map([[{foo: 1}, 'bar'], ['key', 'value']]), [{foo: 1}, 'key']);
-assert.hasAllKeys(new Set([{foo: 'bar'}, 'anotherKey'], [{foo: 'bar'}, 'anotherKey']);
-```
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  object | Mixed | 
-|  keys | String[] | 
-|  message | String | 
-
-
-###containsAllKeys
-`.containsAllKeys(object, [keys], [message])`
-
-Asserts that `object` has all of the `keys` provided but may have more keys not listed.
-You can also provide a single object instead of a `keys` array and its keys
-will be used as the expected set of keys.
-
-```javascript
-assert.containsAllKeys({foo: 1, bar: 2, baz: 3}, ['foo', 'baz']);
-assert.containsAllKeys({foo: 1, bar: 2, baz: 3}, ['foo', 'bar', 'baz']);
-assert.containsAllKeys({foo: 1, bar: 2, baz: 3}, {foo: 30, baz: 1337});
-assert.containsAllKeys({foo: 1, bar: 2, baz: 3}, {foo: 30, bar: 99, baz: 1337});
-assert.containsAllKeys(new Map([[{foo: 1}, 'bar'], ['key', 'value']]), [{foo: 1}]);
-assert.containsAllKeys(new Map([[{foo: 1}, 'bar'], ['key', 'value']]), [{foo: 1}, 'key']);
-assert.containsAllKeys(new Set([{foo: 'bar'}, 'anotherKey'], [{foo: 'bar'}]);
-assert.containsAllKeys(new Set([{foo: 'bar'}, 'anotherKey'], [{foo: 'bar'}, 'anotherKey']);
-```
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  object | Mixed | 
-|  keys | String[] | 
-|  message | String | 
-
-
-###doesNotHaveAnyKeys
-`.doesNotHaveAnyKeys(object, [keys], [message])`
-
-Asserts that `object` has none of the `keys` provided.
-You can also provide a single object instead of a `keys` array and its keys
-will be used as the expected set of keys.
-
-```javascript
-assert.doesNotHaveAnyKeys({foo: 1, bar: 2, baz: 3}, ['one', 'two', 'example']);
-assert.doesNotHaveAnyKeys({foo: 1, bar: 2, baz: 3}, {one: 1, two: 2, example: 'foo'});
-assert.doesNotHaveAnyKeys(new Map([[{foo: 1}, 'bar'], ['key', 'value']]), [{one: 'two'}, 'example']);
-assert.doesNotHaveAnyKeys(new Set([{foo: 'bar'}, 'anotherKey'], [{one: 'two'}, 'example']);
-```
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  object | Mixed | 
-|  keys | String[] | 
-|  message | String | 
-
-
-###doesNotHaveAllKeys
-`.doesNotHaveAllKeys(object, [keys], [message])`
-
-Asserts that `object` does not have at least one of the `keys` provided.
-You can also provide a single object instead of a `keys` array and its keys
-will be used as the expected set of keys.
-
-```javascript
-assert.doesNotHaveAllKeys({foo: 1, bar: 2, baz: 3}, ['one', 'two', 'example']);
-assert.doesNotHaveAllKeys({foo: 1, bar: 2, baz: 3}, {one: 1, two: 2, example: 'foo'});
-assert.doesNotHaveAllKeys(new Map([[{foo: 1}, 'bar'], ['key', 'value']]), [{one: 'two'}, 'example']);
-assert.doesNotHaveAllKeys(new Set([{foo: 'bar'}, 'anotherKey'], [{one: 'two'}, 'example']);
-```
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  object | Mixed | 
-|  keys | String[] | 
-|  message | String | 
-
-
-###doesNotHaveAllKeys
-`.hasAnyDeepKeys(object, [keys], [message])`
-
-Asserts that `object` has at least one of the `keys` provided.
-Since Sets and Maps can have objects as keys you can use this assertion to perform
-a deep comparison.
-You can also provide a single object instead of a `keys` array and its keys
-will be used as the expected set of keys.
-
-```javascript
-assert.hasAnyDeepKeys(new Map([[{one: 'one'}, 'valueOne'], [1, 2]]), {one: 'one'});
-assert.hasAnyDeepKeys(new Map([[{one: 'one'}, 'valueOne'], [1, 2]]), [{one: 'one'}, {two: 'two'}]);
-assert.hasAnyDeepKeys(new Map([[{one: 'one'}, 'valueOne'], [{two: 'two'}, 'valueTwo']]), [{one: 'one'}, {two: 'two'}]);
-assert.hasAnyDeepKeys(new Set([{one: 'one'}, {two: 'two'}]), {one: 'one'});
-assert.hasAnyDeepKeys(new Set([{one: 'one'}, {two: 'two'}]), [{one: 'one'}, {three: 'three'}]);
-assert.hasAnyDeepKeys(new Set([{one: 'one'}, {two: 'two'}]), [{one: 'one'}, {two: 'two'}]);
-```
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  object | Mixed | 
-|  keys | Array&#124;Object | 
-|  message | String | 
-
-
-###hasAllDeepKeys
-`.hasAllDeepKeys(object, [keys], [message])`
-
-Asserts that `object` has all and only all of the `keys` provided.
-Since Sets and Maps can have objects as keys you can use this assertion to perform
-a deep comparison.
-You can also provide a single object instead of a `keys` array and its keys
-will be used as the expected set of keys.
-
-```javascript
-assert.hasAllDeepKeys(new Map([[{one: 'one'}, 'valueOne']]), {one: 'one'});
-assert.hasAllDeepKeys(new Map([[{one: 'one'}, 'valueOne'], [{two: 'two'}, 'valueTwo']]), [{one: 'one'}, {two: 'two'}]);
-assert.hasAllDeepKeys(new Set([{one: 'one'}]), {one: 'one'});
-assert.hasAllDeepKeys(new Set([{one: 'one'}, {two: 'two'}]), [{one: 'one'}, {two: 'two'}]);
-```
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  object | Mixed | 
-|  keys | Array&#124;Object | 
-|  message | String | 
-
-
-###containsAllDeepKeys
-`.containsAllDeepKeys(object, [keys], [message])`
-
-Asserts that `object` contains all of the `keys` provided.
-Since Sets and Maps can have objects as keys you can use this assertion to perform
-a deep comparison.
-You can also provide a single object instead of a `keys` array and its keys
-will be used as the expected set of keys.
-
-```javascript
-assert.containsAllDeepKeys(new Map([[{one: 'one'}, 'valueOne'], [1, 2]]), {one: 'one'});
-assert.containsAllDeepKeys(new Map([[{one: 'one'}, 'valueOne'], [{two: 'two'}, 'valueTwo']]), [{one: 'one'}, {two: 'two'}]);
-assert.containsAllDeepKeys(new Set([{one: 'one'}, {two: 'two'}]), {one: 'one'});
-assert.containsAllDeepKeys(new Set([{one: 'one'}, {two: 'two'}]), [{one: 'one'}, {two: 'two'}]);
-```
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  object | Mixed | 
-|  keys | Array&#124;Object | 
-|  message | String | 
-
-
-###doesNotHaveAnyDeepKeys
-`.doesNotHaveAnyDeepKeys(object, [keys], [message])`
-
-Asserts that `object` has none of the `keys` provided.
-Since Sets and Maps can have objects as keys you can use this assertion to perform
-a deep comparison.
-You can also provide a single object instead of a `keys` array and its keys
-will be used as the expected set of keys.
-
-```javascript
-assert.doesNotHaveAnyDeepKeys(new Map([[{one: 'one'}, 'valueOne'], [1, 2]]), {thisDoesNot: 'exist'});
-assert.doesNotHaveAnyDeepKeys(new Map([[{one: 'one'}, 'valueOne'], [{two: 'two'}, 'valueTwo']]), [{twenty: 'twenty'}, {fifty: 'fifty'}]);
-assert.doesNotHaveAnyDeepKeys(new Set([{one: 'one'}, {two: 'two'}]), {twenty: 'twenty'});
-assert.doesNotHaveAnyDeepKeys(new Set([{one: 'one'}, {two: 'two'}]), [{twenty: 'twenty'}, {fifty: 'fifty'}]);
-```
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  object | Mixed | 
-|  keys | Array&#124;Object | 
-|  message | String | 
-
-
-###doesNotHaveAllDeepKeys
-`.doesNotHaveAllDeepKeys(object, [keys], [message])`
-
-Asserts that `object` does not have at least one of the `keys` provided.
-Since Sets and Maps can have objects as keys you can use this assertion to perform
-a deep comparison.
-You can also provide a single object instead of a `keys` array and its keys
-will be used as the expected set of keys.
-
-```javascript
-assert.doesNotHaveAllDeepKeys(new Map([[{one: 'one'}, 'valueOne'], [1, 2]]), {thisDoesNot: 'exist'});
-assert.doesNotHaveAllDeepKeys(new Map([[{one: 'one'}, 'valueOne'], [{two: 'two'}, 'valueTwo']]), [{twenty: 'twenty'}, {one: 'one'}]);
-assert.doesNotHaveAllDeepKeys(new Set([{one: 'one'}, {two: 'two'}]), {twenty: 'twenty'});
-assert.doesNotHaveAllDeepKeys(new Set([{one: 'one'}, {two: 'two'}]), [{one: 'one'}, {fifty: 'fifty'}]);
-```
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  object | Mixed | 
-|  keys | Array&#124;Object | 
-|  message | String | 
-
-## Error Tests
-
-###throws
-`.throws(fn, [errorLike/string/regexp], [string/regexp], [message])`
-
-If `errorLike` is an `Error` constructor, asserts that `fn` will throw an error that is an
-instance of `errorLike`.
-If `errorLike` is an `Error` instance, asserts that the error thrown is the same
-instance as `errorLike`.
-If `errMsgMatcher` is provided, it also asserts that the error thrown will have a
-message matching `errMsgMatcher`.
-
-```javascript
-assert.throws(fn, 'function throws a reference error');
-assert.throws(fn, /function throws a reference error/);
-assert.throws(fn, ReferenceError);
-assert.throws(fn, errorInstance);
-assert.throws(fn, ReferenceError, 'Error thrown must be a ReferenceError and have this msg');
-assert.throws(fn, errorInstance, 'Error thrown must be the same errorInstance and have this msg');
-assert.throws(fn, ReferenceError, /Error thrown must be a ReferenceError and match this/);
-assert.throws(fn, errorInstance, /Error thrown must be the same errorInstance and match this/);
-```
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  fn | Function | 
-|  errorLike | ErrorConstructor&#124;Error | 
-|  errMsgMatcher | RegExp&#124;String | 
-|  message | String | 
-
-
-###doesNotThrow
-`.doesNotThrow(fn, [errorLike/string/regexp], [string/regexp], [message])`
-
-If `errorLike` is an `Error` constructor, asserts that `fn` will _not_ throw an error that is an
-instance of `errorLike`.
-If `errorLike` is an `Error` instance, asserts that the error thrown is _not_ the same
-instance as `errorLike`.
-If `errMsgMatcher` is provided, it also asserts that the error thrown will _not_ have a
-message matching `errMsgMatcher`.
-
-```javascript
-assert.doesNotThrow(fn, 'Any Error thrown must not have this message');
-assert.doesNotThrow(fn, /Any Error thrown must not match this/);
-assert.doesNotThrow(fn, Error);
-assert.doesNotThrow(fn, errorInstance);
-assert.doesNotThrow(fn, Error, 'Error must not have this message');
-assert.doesNotThrow(fn, errorInstance, 'Error must not have this message');
-assert.doesNotThrow(fn, Error, /Error must not match this/);
-assert.doesNotThrow(fn, errorInstance, /Error must not match this/);
-```
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  fn | Function | 
-|  errorLike | ErrorConstructor | 
-|  errMsgMatcher | RegExp&#124;String | 
-|  message | String | 
-
-###ifError
-`.ifError(object)`
-
-Asserts if value is not a false value, and throws if it is a true value.
-This is added to allow for chai to be a drop-in replacement for Node's
-assert class.
-
-```javascript
-var err = new Error('I am a custom error');
-assert.ifError(err); // Rethrows err!
-```
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  object | Object | 
-
-
-## Member Tests
-
-###sameMembers
-`.sameMembers(set1, set2, [message])`
-
-Asserts that `set1` and `set2` have the same members in any order. Uses a
-strict equality check (===).
-
-```javascript
-assert.sameMembers([ 1, 2, 3 ], [ 2, 1, 3 ], 'same members');
-```
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  set1 | Array | 
-|  set2 | Array | 
-|  message | String | 
-
-
-###notSameMembers
-`.notSameMembers(set1, set2, [message])`
-
-Asserts that `set1` and `set2` don't have the same members in any order.
-Uses a strict equality check (===).
-
-```javascript
-assert.notSameMembers([ 1, 2, 3 ], [ 5, 1, 3 ], 'not same members');
-```
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  set1 | Array | 
-|  set2 | Array | 
-|  message | String | 
-
-
-###sameDeepMembers
-`.sameDeepMembers(set1, set2, [message])`
-
-Asserts that `set1` and `set2` have the same members in any order. Uses a
-deep equality check.
-
-```javascript
-assert.sameDeepMembers([ { a: 1 }, { b: 2 }, { c: 3 } ], [{ b: 2 }, { a: 1 }, { c: 3 }], 'same deep members');
-```
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  set1 | Array | 
-|  set2 | Array | 
-|  message | String | 
-
-
-###notSameDeepMembers
-`.notSameDeepMembers(set1, set2, [message])`
-
-Asserts that `set1` and `set2` don't have the same members in any order.
-Uses a deep equality check.
-
-```javascript
-assert.notSameDeepMembers([ { a: 1 }, { b: 2 }, { c: 3 } ], [{ b: 2 }, { a: 1 }, { f: 5 }], 'not same deep members');
-```
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  set1 | Array | 
-|  set2 | Array | 
-|  message | String | 
-
-
-###sameOrderedMembers
-`.sameOrderedMembers(set1, set2, [message])`
-
-Asserts that `set1` and `set2` have the same members in the same order.
-Uses a strict equality check (===).
-
-```javascript
-assert.sameOrderedMembers([ 1, 2, 3 ], [ 1, 2, 3 ], 'same ordered members');
-```
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  set1 | Array | 
-|  set2 | Array | 
-|  message | String | 
-
-
-###notSameOrderedMembers
-`.notSameOrderedMembers(set1, set2, [message])`
-
-Asserts that `set1` and `set2` don't have the same members in the same
-order. Uses a strict equality check (===).
-
-```javascript
-assert.notSameOrderedMembers([ 1, 2, 3 ], [ 2, 1, 3 ], 'not same ordered members');
-```
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  set1 | Array | 
-|  set2 | Array | 
-|  message | String | 
-
-
-###sameDeepOrderedMembers
-`.sameDeepOrderedMembers(set1, set2, [message])`
-
-Asserts that `set1` and `set2` have the same members in the same order.
-Uses a deep equality check.
-
-```javascript
-assert.sameDeepOrderedMembers([ { a: 1 }, { b: 2 }, { c: 3 } ], [ { a: 1 }, { b: 2 }, { c: 3 } ], 'same deep ordered members');
-```
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  set1 | Array | 
-|  set2 | Array | 
-|  message | String | 
-
-
-### notSameDeepOrderedMembers
-`.notSameDeepOrderedMembers(set1, set2, [message])`
-
-Asserts that `set1` and `set2` don't have the same members in the same
-order. Uses a deep equality check.
-
-```javascript
-assert.notSameDeepOrderedMembers([ { a: 1 }, { b: 2 }, { c: 3 } ], [ { a: 1 }, { b: 2 }, { z: 5 } ], 'not same deep ordered members');
-assert.notSameDeepOrderedMembers([ { a: 1 }, { b: 2 }, { c: 3 } ], [ { b: 2 }, { a: 1 }, { c: 3 } ], 'not same deep ordered members');
+```csharp
+[Display(Name = "Release Date")] // attribute
+public DateTime ReleaseDate { get; set; }
 ```
 
-| Parameter | Type |
-| ------------- | ------------- |
-|  set1 | Array | 
-|  set2 | Array | 
-|  message | String | 
-
+## Generics
 
-###includeMembers
-`.includeMembers(superset, subset, [message])`
+Generics can be classes or structs. Type-parameters are names used in place of concrete types when defining a new generic. They can be associated with classes or methods by placing the type parameter in angle brackets `< >`.
 
-Asserts that `subset` is included in `superset` in any order. Uses a
-strict equality check (===). Duplicates are ignored.
-
-```javascript
-assert.includeMembers([ 1, 2, 3 ], [ 2, 1, 2 ], 'include members');
+```csharp
+public class List<T> // T stands for type
+{
+...
+}
+List<int> list = new List<int>();
+List<char> list = new List<char>();
+List<Person> list = new List<Person>();
 ```
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  superset | Array | 
-|  subset | Array | 
-|  message | String | 
 
 
-###notIncludeMembers
-`.notIncludeMembers(superset, subset, [message])`
+## ASP.NET Classes Cheatsheet
 
-Asserts that `subset` isn't included in `superset` in any order. Uses a
-strict equality check (===). Duplicates are ignored.
+### Some Useful Classes
 
-```javascript
-assert.notIncludeMembers([ 1, 2, 3 ], [ 5, 1 ], 'not include members');
-```
+- IEnumerable `System.Collections.Generic`
+- DbContext `System.Data.Entity`
+- Controller `System.Web.Mvc`
+- HTMLHelper `System.Web.Mvc`
 
-| Parameter | Type |
-| ------------- | ------------- |
-|  superset | Array | 
-|  subset | Array | 
-|  message | String | 
+# Entity Framework
 
+Why do we need Entity Framework?
+You can use Entity Framework for code-first implementations. This allows you to define your models in code, and let Entity Framework generate the database for you.
 
-###includeDeepMembers
-`.includeDeepMembers(superset, subset, [message])`
+## Using Entity Framework
 
-Asserts that `subset` is included in `superset` in any order. Uses a deep
-equality check. Duplicates are ignored.
+The main class that coordinates Entity Framework functionality for a given data model is the database context class. You create this class by deriving from the `System.Data.Entity.DbContext` class. In your code you specify which entities are included in the data model.
 
-```javascript
-assert.includeDeepMembers([ { a: 1 }, { b: 2 }, { c: 3 } ], [ { b: 2 }, { a: 1 }, { b: 2 } ], 'include deep members');
-```
+## `DbContext`
 
-| Parameter | Type |
-| ------------- | ------------- |
-|  superset | Array | 
-|  subset | Array | 
-|  message | String | 
+The `DbContext` class you create will usually be quite simple.
 
+```csharp
+    public class ProjectContext : DbContext
+    {
 
-###notIncludeDeepMembers
-`.notIncludeDeepMembers(superset, subset, [message])`
+        public ProjectContext() : base("ProjectContext")
+        {
+        }
 
-Asserts that `subset` isn't included in `superset` in any order. Uses a
-deep equality check. Duplicates are ignored.
+        public DbSet<Student> Students { get; set; }
+        public DbSet<Equipment> Equipments { get; set; }
 
-```javascript
-assert.notIncludeDeepMembers([ { a: 1 }, { b: 2 }, { c: 3 } ], [ { b: 2 }, { f: 5 } ], 'not include deep members');
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+        }
+    }
 ```
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  superset | Array | 
-|  subset | Array | 
-|  message | String | 
+### DbContext Methods
 
+## Creating the Schema
 
-###includeOrderedMembers
-`.includeOrderedMembers(superset, subset, [message])`
+If you look at the example application Microsoft use to demonstrate the features, you'll see that in the first excercise they create three entities:
+- Student
+- Course
+- Enrollment
 
-Asserts that `subset` is included in `superset` in the same order
-beginning with the first element in `superset`. Uses a strict equality
-check (===).
+If you were creating your first application you might think you would just need two entities: `Student` and `Course`. Why do we need Enrollment? Why can't our Students have the course they are enrolled in as properties, and our Course have Students as properties? What does the `Enrollment` entity bring to the table?
 
-```javascript
-assert.includeOrderedMembers([ 1, 2, 3 ], [ 1, 2 ], 'include ordered members');
-```
+> The many-to-many relationship involves defining a third table (called a junction or join table), whose primary key is composed of the foreign keys from both related tables. 
 
-| Parameter | Type |
-| ------------- | ------------- |
-|  superset | Array | 
-|  subset | Array | 
-|  message | String | 
+Is this true for the Enrollment entity? No. It has it's own EnrollmentID key.
 
+## Navigation Properties
 
-###notIncludeOrderedMembers
-`.notIncludeOrderedMembers(superset, subset, [message])`
+> Navigation properties provide a way to navigate an association between two entity types. Every object can have a navigation property for every relationship in which it participates. Navigation properties allow you to navigate and manage relationships in both directions, returning either a reference object (if the multiplicity is either one or zero-or-one) or a collection (if the multiplicity is many). You may also choose to have one-way navigation, in which case you define the navigation property on only one of the types that participates in the relationship and not on both.
 
-Asserts that `subset` isn't included in `superset` in the same order
-beginning with the first element in `superset`. Uses a strict equality
-check (===).
+https://msdn.microsoft.com/en-us/library/jj713564(v=vs.113).aspx
 
-```javascript
-assert.notIncludeOrderedMembers([ 1, 2, 3 ], [ 2, 1 ], 'not include ordered members');
-assert.notIncludeOrderedMembers([ 1, 2, 3 ], [ 2, 3 ], 'not include ordered members');
+```csharp
+public virtual OfficeAssignment OfficeAssignment { get; set; }
 ```
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  superset | Array | 
-|  subset | Array | 
-|  message | String | 
-
 
-###includeDeepOrderedMembers
-`.includeDeepOrderedMembers(superset, subset, [message])`
-
-Asserts that `subset` is included in `superset` in the same order
-beginning with the first element in `superset`. Uses a deep equality
-check.
-
-```javascript
-assert.includeDeepOrderedMembers([ { a: 1 }, { b: 2 }, { c: 3 } ], [ { a: 1 }, { b: 2 } ], 'include deep ordered members');
+If a navigation property can hold multiple entities, its type must implement the ICollection<T> Interface.
+  
+```csharp  
+public virtual ICollection<Equipment> Equipment { get; set; }  
 ```
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  superset | Array | 
-|  subset | Array | 
-|  message | String | 
 
+The `Equipment` property is a navigation property. Navigation properties hold other entities that are related to this entity. In this case, the `Equipment` property of a `Student` entity will hold all of the `Equipment` entities that are related to that Student entity. In other words, if a given `Student` row in the database has two related `Equipment` rows (rows that contain that student's primary key value in their StudentID foreign key column), that `Student` entity's `Equipment` navigation property will contain those two `Equipment` entities.
 
-###notIncludeDeepOrderedMembers
-`.notIncludeDeepOrderedMembers(superset, subset, [message])`
+Navigation properties are typically defined as virtual so that they can take advantage of an Entity Framework feature called lazy loading.
 
-Asserts that `subset` isn't included in `superset` in the same order
-beginning with the first element in `superset`. Uses a deep equality
-check.
+## Code First
 
-```javascript
-assert.notIncludeDeepOrderedMembers([ { a: 1 }, { b: 2 }, { c: 3 } ], [ { a: 1 }, { f: 5 } ], 'not include deep ordered members');
-assert.notIncludeDeepOrderedMembers([ { a: 1 }, { b: 2 }, { c: 3 } ], [ { b: 2 }, { a: 1 } ], 'not include deep ordered members');
-assert.notIncludeDeepOrderedMembers([ { a: 1 }, { b: 2 }, { c: 3 } ], [ { b: 2 }, { c: 3 } ], 'not include deep ordered members');
-```
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  superset | Array | 
-|  subset | Array | 
-|  message | String | 
-
+Entity Framework allows you to develop a data model with a Code First approach.
 
+This means that you can define your models and Entity Framework will create the database for you.
 
+## The Connection String
 
-## Function Tests
+A connection string provides the information that a provider needs to communicate with a particular database. The Connection String includes parameters such as the name of the driver, Server name and Database name , as well as security information such as user name and password.
 
-###changes
-`.changes(function, object, property, [message])`
+Enter this text in the `Web.config` file in your project.
 
-Asserts that a function changes the value of a property.
-
-```javascript
-var obj = { val: 10 };
-var fn = function() { obj.val = 22 };
-assert.changes(fn, obj, 'val');
+```html
+<connectionStrings>
+    <add name="[YOURMODELNAMEHERE]Context"    
+         connectionString="Data Source=(LocalDB)\MSSQLLocalDB;
+  AttachDbFilename=|DataDirectory|\[YOURDATABASENAMEHERE].mdf;
+  Integrated Security=True" 
+         providerName="System.Data.SqlClient"/>
+  </connectionStrings>
 ```
 
-| Parameter | Type |
-| ------------- | ------------- |
-|  modifier function | Function | 
-|  object or getter function | Object | 
-|  property name _optional_ | String | 
-|  message _optional_ | String | 
+You don't actually have to have a connection string in the `Web.config` file. If you don't supply a connection string, Entity Framework will use a default one based on your context class. However in that case the data won't save to a database.
 
+Note that In Visual Studio 2012 the data source is `(LocalDB)\v11.0`. For Visual Studio 2015 and Visual Studio 2017 it is `(LocalDB)\MSSQLLocalDB`.
+`LocalDB` is a lightweight version of the SQL Server Express Database Engine that is targeted for program development. `LocalDB` starts on demand and runs in user mode, so there is no complex configuration. 
 
-###changesBy
-`.changesBy(function, object, property, delta, [message])`
+### Deploying to Azure
 
-Asserts that a function changes the value of a property by an amount (delta).
+New connection strings are generated when you deploy to Azure.
 
-```javascript
-var obj = { val: 10 };
-var fn = function() { obj.val += 2 };
-assert.changesBy(fn, obj, 'val', 2);
+```html
+<connectionStrings>
+  <add name="ProjectContext"
+    connectionString="$(ReplacableToken_ProjectContext-Web.config Connection String_0)"
+    providerName="System.Data.SqlClient" />
+  <add name="ProjectContext_DatabasePublish"
+    connectionString="$(ReplacableToken_ProjectContext_DatabasePublish-Web.config Connection String_0)"
+    providerName="System.Data.SqlClient"/>
+</connectionStrings>
 ```
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  modifier function | Function | 
-|  object or getter function | Object | 
-|  property name _optional_ | String | 
-|  change amount (delta) | Number | 
-|  message _optional_ | String | 
 
+You can find them in `[ProjectName]\obj\Release\Package\PackageTmp\Web.config`.
 
-###doesNotChange
-`.doesNotChange(function, object, property, [message])`
+## Migrations
 
-Asserts that a function does not change the value of a property.
+Code First Migrations allow you to update your data model and update the database schema without having to drop and re-create the database.
 
-```javascript
-var obj = { val: 10 };
-var fn = function() { console.log('foo'); };
-assert.doesNotChange(fn, obj, 'val');
-```
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  modifier function | Function | 
-|  object or getter function | Object | 
-|  property name _optional_ | String | 
-|  message _optional_ | String | 
-
+You don't _have_ to use Migrations. However, if you don't, all database content will be lost when you update your models.
 
-###changesButNotBy
-`.changesButNotBy(function, object, property, delta, [message])`
+[Great introduction to Code First Migrations](https://stackoverflow.com/questions/40606167/error-when-update-database-using-code-first-there-is-already-an-object-named)
 
-Asserts that a function does not change the value of a property or of a function's return value by an amount (delta)
+## NuGet Commands
 
-```javascript
-var obj = { val: 10 };
-var fn = function() { obj.val += 10 };
-assert.changesButNotBy(fn, obj, 'val', 5);
-```
+There are three main NuGet commands used in migrations.
 
-| Parameter | Type |
+| Command | Description |
 | ------------- | ------------- |
-|  modifier function | Function | 
-|  object or getter function | Object | 
-|  property name _optional_ | String | 
-|  change amount (delta) | Number | 
-|  message _optional_ | String | 
-
-
-###increases
-`.increases(function, object, property, [message])`
-
-Asserts that a function increases a numeric object property.
+|  `Enable-Migrations` | Install migration modules - only needs to be run initially | 
+|  `Add-Migration [MigrationName]` | Generate a new migration code file based on changes in your project models | 
+|  `Update-Database` | Implement any outstanding migrations | 
 
-```javascript
-var obj = { val: 10 };
-var fn = function() { obj.val = 13 };
-assert.increases(fn, obj, 'val');
+Migrations are code files. Every time you run `Add-Migration` a code file is generated/updated, usually in a folder called `Migrations` inside your project. The name of a migration file is composed with a timestamp of its generation concatenated with the name used when running `Add-Migration`. For example
+```bash
+Add-Migration Initial
 ```
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  modifier function | Function | 
-|  object or getter function | Object | 
-|  property name _optional_ | String | 
-|  message _optional_ | String | 
-
-
-###increasesBy
-`.increasesBy(function, object, property, delta, [message])`
-
-Asserts that a function increases a numeric object property or a function's return value by an amount (delta).
-
-```javascript
-var obj = { val: 10 };
-var fn = function() { obj.val += 10 };
-assert.increasesBy(fn, obj, 'val', 10);
+generates
+```bash
+201710021217244_Initial.cs
 ```
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  modifier function | Function | 
-|  object or getter function | Object | 
-|  property name _optional_ | String | 
-|  change amount (delta) | Number | 
-|  message _optional_ | String | 
+You can check the contents of those files and see the effects of running `Add-Migration`. You can also modify them once generated, and add your own code. From my experience it is often necessary to do this.
 
+## Up and Down Methods
 
-###doesNotIncrease
-`.doesNotIncrease(function, object, property, [message])`
+Every single migration has a method `Up` and a method `Down`. 
 
-Asserts that a function does not increase a numeric object property.
+The `Up` method updates the database. The `Down` method reverts them.
 
-```javascript
-var obj = { val: 10 };
-var fn = function() { obj.val = 8 };
-assert.doesNotIncrease(fn, obj, 'val');
-```
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  modifier function | Function | 
-|  object or getter function | Object | 
-|  property name _optional_ | String | 
-|  message _optional_ | String | 
-
+Methods:
+- `CreateTable`&nbsp;
+- `CreateIndex`&nbsp;
+- `AlterColumn`&nbsp;
+- `AddForeignKey`&nbsp;
+- `DropTable`&nbsp;
+- `DropIndex`&nbsp;
+- `DropForeignKey`&nbsp;
 
-###increasesButNotBy
-`.increasesButNotBy(function, object, property, [message])`
+## Migration History
 
-Asserts that a function does not increase a numeric object property or function's return value by an amount (delta).
+Migrations are intended to be incremental. You start with an `Initial` migration, and every time you change your model code you generate a new migration file. The database contains a table named `__MigrationsHistory` that keeps trace of which migrations have been run in your database.
 
-```javascript
-var obj = { val: 10 };
-var fn = function() { obj.val = 15 };
-assert.increasesButNotBy(fn, obj, 'val', 10);
-```
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  modifier function | Function | 
-|  object or getter function | Object | 
-|  property name _optional_ | String | 
-|  change amount (delta) | Number | 
-|  message _optional_ | String | 
+When you run `Update-Database` there are always two implicit parameters: `SourceMigration` and `TargetMigration`. EF incrementally applies the `Up` methods of all the migrations between `SourceMigration` and `TargetMigration` (or the `Down` methods if you are downgrading your database). 
 
+The default scenario when you don't specify the `SourceMigration` and `TargetMigration` parameters is that `SourceMigration` is the last migration applied to the database and `TargetMigration` is the last of the pending ones. EF determines those parameters by querying the `__MigrationsHistory` table of the default database of your project, so if that database is not in a consistent state, your migrations can be generated incorrectly.
 
-###decreases
-`.decreases(function, object, property, [message])`
+## Setting the Seed method to update from a csv file.
 
-Asserts that a function decreases a numeric object property.
+Rather than painstakingly typing values into the Seed method, you can set it to import from a CSV file.
+[There are great instructions on how to do this here.](https://www.davepaquette.com/archive/2014/03/18/seeding-entity-framework-database-from-csv.aspx)
+One mistake I made at first was that I referenced the wrong assembly. Stack Overflow recommended "to make sure you're in the right assembly and with right name: dump and evaluate all the resources available in your target assembly." Which I did:
 
-```javascript
-var obj = { val: 10 };
-var fn = function() { obj.val = 5 };
-assert.decreases(fn, obj, 'val');
+```csharp
+string[] names = assembly.GetManifestResourceNames();
+string fullString = "";
+names.ToList().ForEach(i => fullString += (i.ToString()) + '\n');
 ```
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  modifier function | Function | 
-|  object or getter function | Object | 
-|  property name _optional_ | String | 
-|  message _optional_ | String | 
-
 
-###decreasesBy
-`.decreasesBy(function, object, property, delta, [message])`
+## When Things Go Wrong
 
-Asserts that a function decreases a numeric object property or a function's return value by an amount (delta)
+Entity Framework is not perfect.
 
-```javascript
-var obj = { val: 10 };
-var fn = function() { obj.val -= 5 };
-assert.decreasesBy(fn, obj, 'val', 5);
-```
+> Essentially the ORM can handle about 80-90% of the mapping problems, but that last chunk always needs careful work by somebody who really understands how a relational database works.
 
-| Parameter | Type |
-| ------------- | ------------- |
-|  modifier function | Function | 
-|  object or getter function | Object | 
-|  property name _optional_ | String | 
-|  change amount (delta) | Number | 
-|  message _optional_ | String | 
+> Mapping to a relational database involves lots of repetitive, boiler-plate code. A framework that allows me to avoid 80% of that is worthwhile even if it is only 80%. The problem is in me for pretending it's 100% when it isn't.
 
+You can't just run `Add-Migration MyNewMigration` and assume everything will work out fine. You need to check to make sure that the generated code works correctly.
 
-###doesNotDecrease
-`.doesNotDecrease(function, object, property, [message])`
+### Debugging the Update-Database command
 
-Asserts that a function does not decreases a numeric object property.
+Running the Update-Database command meant that debugging statments like `Debug.WriteLine()` didn't work. Instead I threw an error:
 
-```javascript
-var obj = { val: 10 };
-var fn = function() { obj.val = 15 };
-assert.doesNotDecrease(fn, obj, 'val');
+```csharp
+throw new Exception(fullString);
 ```
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  modifier function | Function | 
-|  object or getter function | Object | 
-|  property name _optional_ | String | 
-|  message _optional_ | String | 
-
-
-###doesNotDecrease
-`.doesNotDecreaseBy(function, object, property, delta, [message])`
+Then I could see I couldn't access the resource since:
 
-Asserts that a function does not decreases a numeric object property or a function's return value by an amount (delta)
+1. It was saved in the wrong namespace.&nbsp;
+2. It's build action was set to `Resource` instead of `Embedded Resource`.&nbsp;
 
-```javascript
-var obj = { val: 10 };
-var fn = function() { obj.val = 5 };
-assert.doesNotDecreaseBy(fn, obj, 'val', 1);
-```
+After I fixed these mistakes I could easily Seed from a CSV.
 
-| Parameter | Type |
-| ------------- | ------------- |
-|  modifier function | Function | 
-|  object or getter function | Object | 
-|  property name _optional_ | String | 
-|  change amount (delta) | Number | 
-|  message _optional_ | String | 
+### Erasing Everything - The Easiest Way to Fix a Problem
 
+You can simply delete the database and migrations history. Obviously this is not a viable solution for production code, but it's often the easiest solution for development code.
 
-###decreasesButNotBy
-`.decreasesButNotBy(function, object, property, delta, [message])`
+1. Delete the `Migrations` folder in your solution.
+2. Delete the tables in the database.
+3. Delete the `_MigrationHistory` table in the database.
+4. Close the database connection.
+5. In the NuGet console, run `Enable-Migrations`.
+6. Run `Add-Migration Initial`.
+7. Run `Update-Database`.
 
-Asserts that a function does not decreases a numeric object property or a function's return value by an amount (delta)
+## Errors
 
-```javascript
-var obj = { val: 10 };
-var fn = function() { obj.val = 5 };
-assert.decreasesButNotBy(fn, obj, 'val', 1);
-```
+### Error: `There is already an object named 'ModelName' in the database.`
 
-| Parameter | Type |
-| ------------- | ------------- |
-|  modifier function | Function | 
-|  object or getter function | Object | 
-|  property name _optional_ | String | 
-|  change amount (delta) | Number | 
-|  message _optional_ | String | 
+### Error: `Sequence contains more than one element.`
 
+https://docs.microsoft.com/en-us/aspnet/mvc/overview/getting-started/getting-started-with-ef-using-mvc/migrations-and-deployment-with-the-entity-framework-in-an-asp-net-mvc-application#enable-code-first-migrations
 
+The first parameter passed to the AddOrUpdate method specifies the property to use to check if a row already exists. For the test student data that you are providing, the LastName property can be used for this purpose since each last name in the list is unique:
+C#Copy
+context.Students.AddOrUpdate(p => p.LastName, s)
 
-## Object Misc Tests
 
-###isExtensible
-`.isExtensible(object)`
+This code assumes that last names are unique. If you manually add a student with a duplicate last name, you'll get the following exception the next time you perform a migration.
+Sequence contains more than one element
 
-Asserts that `object` is extensible (can have new properties added to it).
+https://blogs.msdn.microsoft.com/rickandy/2013/02/12/seeding-and-debugging-entity-framework-ef-dbs/
 
-```javascript
-assert.isExtensible({});
-```
+So it was a Seed error. But it doesn’t cause any big problems. It just means I can’t add the extra data. That’s not a problem, is it?
 
-| Parameter | Type |
-| ------------- | ------------- |
-|  object | Object | 
-|  message _optional_ | String | 
 
 
-###isNotExtensible
-`.isNotExtensible(object)`
 
-Asserts that `object` is _not_ extensible.
 
-```javascript
-var nonExtensibleObject = Object.preventExtensions({});
-var sealedObject = Object.seal({});
-var frozenObject = Object.freeze({});
+# Views
 
-assert.isNotExtensible(nonExtensibleObject);
-assert.isNotExtensible(sealedObject);
-assert.isNotExtensible(frozenObject);
-```
 
-| Parameter | Type |
-| ------------- | ------------- |
-|  object | Object | 
-|  message _optional_ | String | 
+## Using Code
 
+> The key transition character in Razor is the “at” sign (@). This single character is used to transition from markup to code.
 
-###isSealed
-`.isSealed(object)`
 
-Asserts that `object` is sealed (cannot have new properties added to it
-and its existing properties cannot be removed).
+The `@` transition symbol effectively works as a `console.log` or `println()` mechanism.
 
-```javascript
-var sealedObject = Object.seal({});
-var frozenObject = Object.seal({});
+Code that is encased in curly brackets will be executed. Code that's simply preceded by `@` will be outputted.
 
-assert.isSealed(sealedObject);
-assert.isSealed(frozenObject);
+```liquid
+@{var test = 10; }
+@{test = test -1;}
+@test // 9
 ```
 
-| Parameter | Type |
-| ------------- | ------------- |
-|  object | Object | 
-|  message _optional_ | String | 
-
-
-###isNotSealed
-`.isNotSealed(object)`
-
-Asserts that `object` is _not_ sealed.
 
-```javascript
-assert.isNotSealed({});
-```
 
-| Parameter | Type |
-| ------------- | ------------- |
-|  object | Object | 
-|  message _optional_ | String | 
+By including a @model statement at the top of the view template file, you can specify the type of object that the view expects.
 
+`@model IEnumerable<Your.Model.Namespace>`
 
-###isFrozen
-`.isFrozen(object)`
+This `@model` directive allows you to access the list of movies that the controller passed to the view
 
-Asserts that `object` is frozen (cannot have new properties added to it
-and its existing properties cannot be modified).
+##  Layout
 
-```javascript
-var frozenObject = Object.freeze({});
-assert.frozen(frozenObject);
-```
+By convention, the default layout for an ASP.NET app is named `_Layout.cshtml`.
 
-| Parameter | Type |
-| ------------- | ------------- |
-|  object | Object | 
-|  message _optional_ | String | 
+The default layout is defined in `_ViewStart.cshtml` file in `Views`.
 
+ 
+## HTML Helper Methods
 
-###isNotFrozen
-`.isNotFrozen(object)`
+The `Html` object is a helper that's exposed using a property on the `System.Web.Mvc.WebViewPage base` class. 
 
-Asserts that `object` is _not_ frozen.
+### `Html.BeginForm`
 
-```javascript
-assert.isNotFrozen({});
-```
+if you leave it empty it will look for a post action with the same name that on the page you are now
 
-| Parameter | Type |
-| ------------- | ------------- |
-|  object | Object | 
-|  message _optional_ | String | 
+- `Html.DisplayNameFor`
+- `Html.DisplayFor`
+- `Html.ValidationSummary`
+- `Html.EditorFor`
+- `Html.LabelFor`
+- `Html.DropDownList`
 
-## Mixed Misc Tests
+### `Html.ActionLink`
 
-### assert
-#### assert(expression, message)
-Write your own test expressions.
+The `ActionLink` method of the helper makes it easy to dynamically generate HTML hyperlinks that link to action methods on controllers. 
 
-```javascript
-assert('foo' !== 'bar', 'foo is not bar');
-assert(Array.isArray([]), 'empty arrays are arrays');
+```csharp
+@Html.ActionLink("Edit", "Edit", new { id=item.ID }) 
 ```
-
-| Parameter | Type |
-| ------------- | ------------- |
-|  expression to test for truthiness | Mixed | 
-|  message to display on error | String | 
+arguments
+- string linkText
+- string actionName (this is the method name unless otherwise specified)
+- string controllerName OR object routeValues
 
-
-###fail
-`.fail(actual, expected, [message], [operator])`
-
-Throw a failure. Node.js `assert` module-compatible.
-
-| Parameter | Type |
+| Type | Name |
 | ------------- | ------------- |
-|  actual | Mixed | 
-|  expected | Mixed | 
-|  message | String | 
-|  operator | String | 
+| string | linkText | 
+| string | actionName (this is the method name unless otherwise specified) | 
+| string OR object | controllerName OR routeValues | 
 
+The default route (established in `App_Start\RouteConfig.cs)` takes the URL pattern `{controller}/{action}/{id}`
 
-###lengthOf
-`.lengthOf(object, length, [message])`
+So for example,the generated route in this case is `http://localhost:1234/Movies/Edit/4`
 
-Asserts that `object` has a `length` property with the expected value.
+### `Html.DisplayFor`
 
-```javascript
-assert.lengthOf([1,2,3], 3, 'array has length of 3');
-assert.lengthOf('foobar', 6, 'string has length of 6');
-```
+# Controllers
 
-| Parameter | Type |
-| ------------- | ------------- |
-|  object | Mixed | 
-|  length | Number | 
-|  message | String | 
+Rather than having a direct relationship between the URL and a file living on the web server’s hard
+drive, a relationship exists between the URL and a method on a controller class
 
+AccountController: Responsible for account-related requests, such as login and account
+registration
 
-###operator
-`.operator(val1, operator, val2, [message])`
+A controller can pass data or objects to a view template using the `ViewBag` object. The `ViewBag` is a dynamic object that provides a convenient late-bound way to pass information to a view.
 
-Compares two values using `operator`.
+## Creating a `BulkCreate` method
 
-```javascript
-assert.operator(1, '<', 2, 'everything is ok');
-assert.operator(1, '>', 2, 'this will fail');
-```
+https://docs.microsoft.com/en-us/aspnet/mvc/overview/getting-started/introduction/adding-a-view
 
-| Parameter | Type |
-| ------------- | ------------- |
-|  val1 | Mixed | 
-|  operator | String | 
-|  val2 | Mixed | 
-|  message | String | 
+> Controller methods (also known as action methods), such as the Index method above, generally return an ActionResult (or a class derived from ActionResult), not primitive types like string.
 
-###oneOf
-`.oneOf(inList, list, [message])`
+> simply ran the statement return View(), which specified that the method should use a view template file to render a response to the browser. Because you didn't explicitly specify the name of the view template file to use, ASP.NET MVC defaulted to using the Index.cshtml view file in the \Views\HelloWorld folder. The image below shows the string "Hello from our View Template!" hard-coded in the view.
 
-Asserts that non-object, non-array value `inList` appears in the flat array `list`.
 
-```javascript
-assert.oneOf(1, [ 2, 1 ], 'Not found in list');
-```
 
-| Parameter | Type |
-| ------------- | ------------- |
-|  inList | * | 
-|  list | Array<*> | 
-|  message | String | 
-
-
-###isEmpty
-`.isEmpty(target)`
-
-Asserts that the target does not contain any values.
-For arrays and strings, it checks the `length` property.
-For `Map` and `Set` instances, it checks the `size` property.
-For non-function objects, it gets the count of own
-enumerable string keys.
-
-```javascript
-assert.isEmpty([]);
-assert.isEmpty('');
-assert.isEmpty(new Map);
-assert.isEmpty({});
-```
+ASP.NET controller scaffolding will create `Create` action methods for both GET and POST requests.
 
-| Parameter | Type |
-| ------------- | ------------- |
-|  target | Object &#124; Array &#124; String &#124; Map &#124; Set | 
-|  message _optional_ | String | 
-
-
-###isNotEmpty
-`.isNotEmpty(target)`
-
-Asserts that the target contains values.
-For arrays and strings, it checks the `length` property.
-For `Map` and `Set` instances, it checks the `size` property.
-For non-function objects, it gets the count of own
-enumerable string keys.
-
-```javascript
-assert.isNotEmpty([1, 2]);
-assert.isNotEmpty('34');
-assert.isNotEmpty(new Set([5, 6]));
-assert.isNotEmpty({ key: 7 });
-```
+But what about if you want to bulk create items?
 
-| Parameter | Type |
-| ------------- | ------------- |
-|  target | Object|Array&#124;String&#124;Map&#124;Set | 
-|  message _optional_ | String | 
 
