@@ -498,9 +498,9 @@ Sequence contains more than one element</p>
 <p>The <code class="prettyprint">@</code> transition symbol effectively works as a <code class="prettyprint">console.log</code> or <code class="prettyprint">println()</code> mechanism.</p>
 
 <p>Code that is encased in curly brackets will be executed. Code that&rsquo;s simply preceded by <code class="prettyprint">@</code> will be outputted.</p>
-<pre class="highlight liquid tab-liquid"><code>@{var test = 10; }
-@{test = test -1;}
-@test // 9
+<pre class="highlight python tab-python"><code><span class="err">@</span><span class="p">{</span><span class="n">var</span> <span class="n">test</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span> <span class="p">}</span>
+<span class="err">@</span><span class="p">{</span><span class="n">test</span> <span class="o">=</span> <span class="n">test</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="p">}</span>
+<span class="nd">@test</span> <span class="o">//</span> <span class="mi">9</span>
 </code></pre>
 <p>By including a @model statement at the top of the view template file, you can specify the type of object that the view expects.</p>
 
@@ -582,14 +582,31 @@ registration</p>
 <p>https://docs.microsoft.com/en-us/aspnet/mvc/overview/getting-started/introduction/adding-a-view</p>
 
 <blockquote>
-<p>Controller methods (also known as action methods), such as the Index method above, generally return an ActionResult (or a class derived from ActionResult), not primitive types like string.</p>
-
-<p>simply ran the statement return View(), which specified that the method should use a view template file to render a response to the browser. Because you didn&rsquo;t explicitly specify the name of the view template file to use, ASP.NET MVC defaulted to using the Index.cshtml view file in the \Views\HelloWorld folder. The image below shows the string &ldquo;Hello from our View Template!&rdquo; hard-coded in the view.</p>
+<p>Controller methods (also known as action methods), generally return an ActionResult (or a class derived from ActionResult).</p>
 </blockquote>
+
+<p>Controller methods often return <code class="prettyprint">View()</code>, which specified that the method should use a view template file to render a response to the browser. When the name of the view template to use isn&rsquo;t explicitly specified, ASP.NET MVC defaults to using the view file sharing the name of the action method. </p>
 
 <p>ASP.NET controller scaffolding will create <code class="prettyprint">Create</code> action methods for both GET and POST requests.</p>
 
 <p>But what about if you want to bulk create items?</p>
+
+<p>First of all, we need to change the arguments that are passed to the POST request. Instead of </p>
+<pre class="highlight csharp tab-csharp"><code><span class="na">[HttpPost]</span>
+<span class="na">[ValidateAntiForgeryToken]</span>
+<span class="k">public</span> <span class="n">ActionResult</span> <span class="nf">Create</span><span class="p">(</span><span class="n">Equipment</span> <span class="n">equipment</span><span class="p">)</span>
+</code></pre>
+<p>We need to pass the method an <code class="prettyprint">IEnumerable</code> object instead of a single object.</p>
+<pre class="highlight csharp tab-csharp"><code><span class="na">[HttpPost]</span>
+<span class="na">[ValidateAntiForgeryToken]</span>
+<span class="k">public</span> <span class="n">ActionResult</span> <span class="nf">Create</span><span class="p">(</span><span class="n">IEnumerable</span><span class="p">&lt;</span><span class="n">Equipment</span><span class="p">&gt;</span> <span class="n">equipmentCollection</span><span class="p">)</span>
+</code></pre>
+<blockquote>
+<p>Usually what you choose will depend on which methods you need access to. In general:
+- <code class="prettyprint">IEnumerable&lt;&gt;</code> for a list of objects that only needs to be iterated through.
+- <code class="prettyprint">ICollection&lt;&gt;</code> for a list of objects that needs to be iterated through and modified.
+- <code class="prettyprint">List&lt;&gt;</code> for a list of objects that needs to be iterated through, modified, sorted, etc.</p>
+</blockquote>
 
   </div>
   <div class="dark-box">
