@@ -283,6 +283,14 @@ You can use Entity Framework for code-first implementations. This allows you to 
 
 <h2 id="dbcontext"><code class="prettyprint">DbContext</code></h2>
 
+<p>DbContext allows you to interact with the database that Entity Framework creates.</p>
+
+<p>For example</p>
+<pre class="highlight csharp tab-csharp"><code><span class="k">private</span> <span class="n">ProjectContext</span> <span class="n">db</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">ProjectContext</span><span class="p">();</span>
+<span class="kt">var</span> <span class="n">equipments</span> <span class="p">=</span> <span class="n">db</span><span class="p">.</span><span class="n">Equipments</span><span class="p">.</span><span class="nf">Include</span><span class="p">(</span><span class="n">e</span> <span class="p">=&gt;</span> <span class="n">e</span><span class="p">.</span><span class="n">Student</span><span class="p">);</span>
+</code></pre>
+<p>returns an <code class="prettyprint">IQueryable&lt;Equipment&gt;</code> array of objects.</p>
+
 <p>The <code class="prettyprint">DbContext</code> class you create will usually be quite simple.</p>
 <pre class="highlight csharp tab-csharp"><code>    <span class="k">public</span> <span class="k">class</span> <span class="nc">ProjectContext</span> <span class="p">:</span> <span class="n">DbContext</span>
     <span class="p">{</span>
@@ -419,24 +427,23 @@ You can check the contents of those files and see the effects of running <code c
 
 <p>The <code class="prettyprint">Up</code> method updates the database. The <code class="prettyprint">Down</code> method reverts them.</p>
 
-<p>Methods:
-- <code class="prettyprint">CreateTable</code>&nbsp;
-- <code class="prettyprint">CreateIndex</code>&nbsp;
-- <code class="prettyprint">AlterColumn</code>&nbsp;
-- <code class="prettyprint">AddForeignKey</code>&nbsp;
-- <code class="prettyprint">DropTable</code>&nbsp;
-- <code class="prettyprint">DropIndex</code>&nbsp;
-- <code class="prettyprint">DropForeignKey</code>&nbsp;</p>
+<p>Methods:</p>
 
-<h2 id="migration-history">Migration History</h2>
+<ul>
+<li><code class="prettyprint">CreateTable</code>&nbsp;</li>
+<li><code class="prettyprint">CreateIndex</code>&nbsp;</li>
+<li><code class="prettyprint">AlterColumn</code>&nbsp;</li>
+<li><code class="prettyprint">AddForeignKey</code>&nbsp;</li>
+<li><code class="prettyprint">DropTable</code>&nbsp;</li>
+<li><code class="prettyprint">DropIndex</code>&nbsp;</li>
+<li><code class="prettyprint">DropForeignKey</code>&nbsp;</li>
+</ul>
 
-<p>Migrations are intended to be incremental. You start with an <code class="prettyprint">Initial</code> migration, and every time you change your model code you generate a new migration file. The database contains a table named <code class="prettyprint">__MigrationsHistory</code> that keeps trace of which migrations have been run in your database.</p>
+<h2 id="the-configuration-file">The Configuration File</h2>
 
-<p>When you run <code class="prettyprint">Update-Database</code> there are always two implicit parameters: <code class="prettyprint">SourceMigration</code> and <code class="prettyprint">TargetMigration</code>. EF incrementally applies the <code class="prettyprint">Up</code> methods of all the migrations between <code class="prettyprint">SourceMigration</code> and <code class="prettyprint">TargetMigration</code> (or the <code class="prettyprint">Down</code> methods if you are downgrading your database). </p>
+<p>This is where you set the <code class="prettyprint">Seed</code> method, as well as methods that run every time you have a migration.</p>
 
-<p>The default scenario when you don&rsquo;t specify the <code class="prettyprint">SourceMigration</code> and <code class="prettyprint">TargetMigration</code> parameters is that <code class="prettyprint">SourceMigration</code> is the last migration applied to the database and <code class="prettyprint">TargetMigration</code> is the last of the pending ones. EF determines those parameters by querying the <code class="prettyprint">__MigrationsHistory</code> table of the default database of your project, so if that database is not in a consistent state, your migrations can be generated incorrectly.</p>
-
-<h2 id="setting-the-seed-method-to-update-from-a-csv-file">Setting the Seed method to update from a csv file.</h2>
+<h2 id="setting-the-seed-method-to-update-from-a-csv-file">Setting the <code class="prettyprint">Seed</code> method to update from a csv file.</h2>
 
 <p>Rather than painstakingly typing values into the Seed method, you can set it to import from a CSV file.
 <a href="https://www.davepaquette.com/archive/2014/03/18/seeding-entity-framework-database-from-csv.aspx">There are great instructions on how to do this here.</a>
@@ -445,6 +452,14 @@ One mistake I made at first was that I referenced the wrong assembly. Stack Over
 <span class="kt">string</span> <span class="n">fullString</span> <span class="p">=</span> <span class="s">""</span><span class="p">;</span>
 <span class="n">names</span><span class="p">.</span><span class="nf">ToList</span><span class="p">().</span><span class="nf">ForEach</span><span class="p">(</span><span class="n">i</span> <span class="p">=&gt;</span> <span class="n">fullString</span> <span class="p">+=</span> <span class="p">(</span><span class="n">i</span><span class="p">.</span><span class="nf">ToString</span><span class="p">())</span> <span class="p">+</span> <span class="sc">'\n'</span><span class="p">);</span>
 </code></pre>
+<h2 id="migration-history">Migration History</h2>
+
+<p>Migrations are intended to be incremental. You start with an <code class="prettyprint">Initial</code> migration, and every time you change your model code you generate a new migration file. For example, <code class="prettyprint">201712121451507_type-correction-date-purchased.cs</code>. The database contains a table named <code class="prettyprint">__MigrationsHistory</code> that keeps trace of which migrations have been run in your database.</p>
+
+<p>When you run <code class="prettyprint">Update-Database</code> there are always two implicit parameters: <code class="prettyprint">SourceMigration</code> and <code class="prettyprint">TargetMigration</code>. EF incrementally applies the <code class="prettyprint">Up</code> methods of all the migrations between <code class="prettyprint">SourceMigration</code> and <code class="prettyprint">TargetMigration</code> (or the <code class="prettyprint">Down</code> methods if you are downgrading your database). </p>
+
+<p>The default scenario when you don&rsquo;t specify the <code class="prettyprint">SourceMigration</code> and <code class="prettyprint">TargetMigration</code> parameters is that <code class="prettyprint">SourceMigration</code> is the last migration applied to the database and <code class="prettyprint">TargetMigration</code> is the last of the pending ones. EF determines those parameters by querying the <code class="prettyprint">__MigrationsHistory</code> table of the default database of your project, so if that database is not in a consistent state, your migrations can be generated incorrectly.</p>
+
 <h2 id="when-things-go-wrong">When Things Go Wrong</h2>
 
 <p>Entity Framework is not perfect.</p>
@@ -596,6 +611,10 @@ Sequence contains more than one element</p>
 <p>So for example,the generated route in this case is <code class="prettyprint">http://localhost:1234/Movies/Edit/4</code></p>
 
 <h3 id="html-displayfor"><code class="prettyprint">Html.DisplayFor</code></h3>
+
+<h2 id="datatables">DataTables</h2>
+
+<p>Datatables is a great JQuery Library</p>
 
 <h1 id="controllers">Controllers</h1>
 
