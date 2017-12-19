@@ -457,9 +457,9 @@ One mistake I made at first was that I referenced the wrong assembly. Stack Over
 
 <p>You can&rsquo;t just run <code class="prettyprint">Add-Migration MyNewMigration</code> and assume everything will work out fine. You need to check to make sure that the generated code works correctly.</p>
 
-<h3 id="debugging-the-update-database-command">Debugging the Update-Database command</h3>
+<h3 id="debugging-the-update-database-command">Debugging the <code class="prettyprint">Update-Database</code> command</h3>
 
-<p>Running the Update-Database command meant that debugging statments like <code class="prettyprint">Debug.WriteLine()</code> didn&rsquo;t work. Instead I threw an error:</p>
+<p>Running the <code class="prettyprint">Update-Database</code> command meant that debugging statments like <code class="prettyprint">Debug.WriteLine()</code> didn&rsquo;t work. Instead I threw an error:</p>
 <pre class="highlight csharp tab-csharp"><code><span class="k">throw</span> <span class="k">new</span> <span class="nf">Exception</span><span class="p">(</span><span class="n">fullString</span><span class="p">);</span>
 </code></pre>
 <p>Then I could see I couldn&rsquo;t access the resource since:</p>
@@ -638,6 +638,34 @@ registration</p>
 - <code class="prettyprint">List&lt;&gt;</code> for a list of objects that needs to be iterated through, modified, sorted, etc.</p>
 </blockquote>
 
+<h2 id="using-dbcontext-in-controllers">Using DbContext in Controllers</h2>
+
+<p>First of all, to access the database, instantiate a instance of the database:</p>
+<pre class="highlight csharp tab-csharp"><code><span class="k">private</span> <span class="n">ProjectContext</span> <span class="n">db</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">ProjectContext</span><span class="p">();</span>
+</code></pre>
+<h3 id="getting-a-list-of-all-an-entitys-elements">Getting a list of all an entity&rsquo;s elements</h3>
+<pre class="highlight csharp tab-csharp"><code><span class="kt">var</span> <span class="n">equipments</span> <span class="p">=</span> <span class="n">db</span><span class="p">.</span><span class="n">Equipments</span><span class="p">.</span><span class="nf">Include</span><span class="p">(</span><span class="n">e</span> <span class="p">=&gt;</span> <span class="n">e</span><span class="p">.</span><span class="n">Student</span><span class="p">);</span>
+<span class="k">return</span> <span class="nf">View</span><span class="p">(</span><span class="n">equipments</span><span class="p">);</span>
+</code></pre>
+<h3 id="finding-a-single-entity-entry">Finding a single entity entry</h3>
+<pre class="highlight csharp tab-csharp"><code><span class="n">Equipment</span> <span class="n">equipment</span> <span class="p">=</span> <span class="n">db</span><span class="p">.</span><span class="n">Equipments</span><span class="p">.</span><span class="nf">Find</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+<span class="k">return</span> <span class="nf">View</span><span class="p">(</span><span class="n">equipment</span><span class="p">);</span>
+</code></pre>
+<h3 id="updating-a-single-entry">Updating a single entry</h3>
+<pre class="highlight csharp tab-csharp"><code><span class="n">db</span><span class="p">.</span><span class="nf">Entry</span><span class="p">(</span><span class="n">equipment</span><span class="p">).</span><span class="n">State</span> <span class="p">=</span> <span class="n">EntityState</span><span class="p">.</span><span class="n">Modified</span><span class="p">;</span>
+<span class="n">db</span><span class="p">.</span><span class="nf">SaveChanges</span><span class="p">();</span>
+</code></pre>
+<h3 id="updating-a-single-field-in-an-entry">Updating a single field in an entry</h3>
+<pre class="highlight csharp tab-csharp"><code><span class="n">Equipment</span> <span class="n">equipment</span> <span class="p">=</span> <span class="n">db</span><span class="p">.</span><span class="n">Equipments</span><span class="p">.</span><span class="nf">Find</span><span class="p">(</span><span class="n">ID</span><span class="p">);</span>
+<span class="n">equipment</span><span class="p">.</span><span class="n">StudentID</span> <span class="p">=</span> <span class="n">StudentID</span><span class="p">;</span>
+<span class="n">db</span><span class="p">.</span><span class="nf">Entry</span><span class="p">(</span><span class="n">equipment</span><span class="p">).</span><span class="n">State</span> <span class="p">=</span> <span class="n">EntityState</span><span class="p">.</span><span class="n">Modified</span><span class="p">;</span>
+<span class="n">db</span><span class="p">.</span><span class="nf">SaveChanges</span><span class="p">();</span>
+</code></pre>
+<h3 id="deleting-an-entry">Deleting an entry</h3>
+<pre class="highlight csharp tab-csharp"><code><span class="n">Equipment</span> <span class="n">equipment</span> <span class="p">=</span> <span class="n">db</span><span class="p">.</span><span class="n">Equipments</span><span class="p">.</span><span class="nf">Find</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+<span class="n">db</span><span class="p">.</span><span class="n">Equipments</span><span class="p">.</span><span class="nf">Remove</span><span class="p">(</span><span class="n">equipment</span><span class="p">);</span>
+<span class="n">db</span><span class="p">.</span><span class="nf">SaveChanges</span><span class="p">();</span>
+</code></pre>
   </div>
   <div class="dark-box">
   </div>
