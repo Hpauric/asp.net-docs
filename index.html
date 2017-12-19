@@ -281,9 +281,9 @@ You can use Entity Framework for code-first implementations. This allows you to 
 
 <p>The main class that coordinates Entity Framework functionality for a given data model is the database context class. You create this class by deriving from the <code class="prettyprint">System.Data.Entity.DbContext</code> class. In your code you specify which entities are included in the data model.</p>
 
-<h2 id="dbcontext"><code class="prettyprint">DbContext</code></h2>
+<h2 id="the-dbcontext-class">The <code class="prettyprint">DbContext</code> class</h2>
 
-<p>DbContext allows you to interact with the database that Entity Framework creates.</p>
+<p><code class="prettyprint">DbContext</code> allows you to interact with the database that Entity Framework creates.</p>
 
 <p>For example</p>
 <pre class="highlight csharp tab-csharp"><code><span class="k">private</span> <span class="n">ProjectContext</span> <span class="n">db</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">ProjectContext</span><span class="p">();</span>
@@ -309,6 +309,17 @@ You can use Entity Framework for code-first implementations. This allows you to 
     <span class="p">}</span>
 </code></pre>
 <h3 id="dbcontext-methods">DbContext Methods</h3>
+
+<h2 id="the-dbmigrationsconfigurationtcontext-class">The <code class="prettyprint">DbMigrationsConfiguration&lt;TContext&gt;</code> Class</h2>
+
+<p>This is where you set the seed method.</p>
+
+<p>https://blog.oneunicorn.com/2013/05/28/database-initializer-and-migrations-seed-methods/
+Migrations Seed
+Migrations introduced its own Seed method on the DbMigrationsConfiguration class. This seed method is different from the database initializer Seed method in two important ways:</p>
+
+<p>It runs whenever the Update-Database PowerShell command is executed. Unless the Migrations initializer is being used the Migrations Seed method will not be executed when your application starts.
+It must handle cases where the database already contains data because Migrations is evolving the database rather than dropping and recreating it.</p>
 
 <h2 id="creating-the-schema">Creating the Schema</h2>
 
