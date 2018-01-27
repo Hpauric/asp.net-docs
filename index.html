@@ -357,16 +357,6 @@ You can use Entity Framework for code-first implementations. This allows you to 
 </code></pre>
 <h3 id="dbcontext-methods">DbContext Methods</h3>
 
-<h2 id="the-dbmigrationsconfigurationtcontext-class">The <code class="prettyprint">DbMigrationsConfiguration&lt;TContext&gt;</code> Class</h2>
-
-<p>This is where you can set a seed method that will run every time &lsquo;Update-Database&rsquo; is run, even if there is no explicit pending migration. This is in contrast to the Database initializer <code class="prettyprint">Seed</code> method, which will only run when the database is created. <a href="https://blog.oneunicorn.com/2013/05/28/database-initializer-and-migrations-seed-methods">Database initializer and Migrations Seed methods</a> is a great blog post that covers this in more detail.</p>
-
-<p>Migrations Seed
-Migrations introduced its own Seed method on the DbMigrationsConfiguration class. This seed method is different from the database initializer Seed method in two important ways:</p>
-
-<p>It runs whenever the Update-Database PowerShell command is executed. Unless the Migrations initializer is being used the Migrations Seed method will not be executed when your application starts.
-It must handle cases where the database already contains data because Migrations is evolving the database rather than dropping and recreating it.</p>
-
 <h2 id="creating-the-schema">Creating the Schema</h2>
 
 <p>If you look at the example application Microsoft use to demonstrate the features, you&rsquo;ll see that in the first excercise they create three entities:
@@ -443,6 +433,16 @@ It must handle cases where the database already contains data because Migrations
 <p>You don&rsquo;t <em>have</em> to use Migrations. However, if you don&rsquo;t, all database content will be lost when you update your models.</p>
 
 <p><a href="https://stackoverflow.com/questions/40606167/error-when-update-database-using-code-first-there-is-already-an-object-named">Great introduction to Code First Migrations</a></p>
+
+<h2 id="the-dbmigrationsconfigurationtcontext-class">The <code class="prettyprint">DbMigrationsConfiguration&lt;TContext&gt;</code> Class</h2>
+
+<p>This is where you can set a seed method that will run every time &lsquo;Update-Database&rsquo; is run, even if there is no explicit pending migration. This is in contrast to the Database initializer <code class="prettyprint">Seed</code> method, which will only run when the database is created. <a href="https://blog.oneunicorn.com/2013/05/28/database-initializer-and-migrations-seed-methods">Database initializer and Migrations Seed methods</a> is a great blog post that covers this in more detail.</p>
+
+<p>Migrations Seed
+Migrations introduced its own Seed method on the DbMigrationsConfiguration class. This seed method is different from the database initializer Seed method in two important ways:</p>
+
+<p>It runs whenever the Update-Database PowerShell command is executed. Unless the Migrations initializer is being used the Migrations Seed method will not be executed when your application starts.
+It must handle cases where the database already contains data because Migrations is evolving the database rather than dropping and recreating it.</p>
 
 <h2 id="nuget-commands">NuGet Commands</h2>
 
