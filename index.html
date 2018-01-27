@@ -281,6 +281,53 @@ You can use Entity Framework for code-first implementations. This allows you to 
 
 <p>The main class that coordinates Entity Framework functionality for a given data model is the database context class. You create this class by deriving from the <code class="prettyprint">System.Data.Entity.DbContext</code> class. In your code you specify which entities are included in the data model.</p>
 
+<h2 id="asp-net-set-model-field-cascade-null">asp.net set model field cascade null</h2>
+
+<p>There are a few options if you want to set a model field to cascade set null.</p>
+
+<p>You can use the ModelBuilder</p>
+<pre class="highlight csharp tab-csharp"><code><span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">OnModelCreating</span><span class="p">(</span><span class="n">DbModelBuilder</span> <span class="n">modelBuilder</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">modelBuilder</span><span class="p">.</span><span class="n">Conventions</span><span class="p">.</span><span class="n">Remove</span><span class="p">&lt;</span><span class="n">PluralizingTableNameConvention</span><span class="p">&gt;();</span>
+
+            <span class="n">modelBuilder</span><span class="p">.</span><span class="n">Entity</span><span class="p">&lt;</span><span class="n">Equipment</span><span class="p">&gt;()</span>
+                <span class="p">.</span><span class="n">HasOptional</span><span class="p">&lt;</span><span class="n">Student</span><span class="p">&gt;(</span><span class="n">s</span> <span class="p">=&gt;</span> <span class="n">s</span><span class="p">.</span><span class="n">Student</span><span class="p">)</span>
+                <span class="p">.</span><span class="nf">WithMany</span><span class="p">()</span>
+                <span class="p">.</span><span class="nf">HasForeignKey</span><span class="p">(</span><span class="n">s</span> <span class="p">=&gt;</span> <span class="n">s</span><span class="p">.</span><span class="n">StudentID</span><span class="p">)</span>
+                <span class="p">.</span><span class="nf">WillCascadeOnDelete</span><span class="p">();</span>
+</code></pre>
+<p>Or you can use migrations</p>
+
+<p>https://stackoverflow.com/questions/46804386/ef-code-first-cascade-null</p>
+<pre class="highlight csharp tab-csharp"><code><span class="k">public</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">AddOnDeleteSetNull</span> <span class="p">:</span> <span class="n">DbMigration</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Up</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="nf">Sql</span><span class="p">(</span><span class="s">"ALTER TABLE dbo.TableA DROP CONSTRAINT [FK_dbo.TableA_dbo.Users_UserModifiedId]"</span><span class="p">);</span>
+        <span class="nf">Sql</span><span class="p">(</span><span class="s">"ALTER TABLE dbo.TableA ADD CONSTRAINT [FK_dbo.TableA_dbo.Users_UserModifiedId_SetNullOnDelete] FOREIGN KEY (UserModifiedId) REFERENCES dbo.Users(UserId) ON UPDATE NO ACTION ON DELETE SET NULL"</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Down</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="c1">// Here you have to undo the changes!</span>
+        <span class="c1">// ...</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+<h2 id="explicit-loading">Explicit Loading</h2>
+
+<p>https://stackoverflow.com/questions/26661771/what-does-include-do-in-linq</p>
+
+<p>Explicit loading. This is similar to lazy loading, except that you explicitly retrieve the related data in code; it doesn&rsquo;t happen automatically when you access a navigation property. You load related data manually by getting the object state manager entry for an entity and calling the <code class="prettyprint">Collection.Load</code> method for collections or the <code class="prettyprint">Reference.Load</code> method for properties that hold a single entity. If you wanted to load Courses:</p>
+<pre class="highlight csharp tab-csharp"><code><span class="nf">Collection</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span><span class="p">.</span><span class="n">Courses</span><span class="p">)</span>
+</code></pre>
+<p>If you wanted to load the Administrator navigation property, you&rsquo;d would instead use:</p>
+<pre class="highlight csharp tab-csharp"><code><span class="nf">Reference</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span><span class="p">.</span><span class="n">Administrator</span><span class="p">).)</span> <span class="n">T</span>
+</code></pre>
+<p>Typically you&rsquo;d use explicit loading only when you&rsquo;ve turned lazy loading off.</p>
+
+<p>Because they don&rsquo;t immediately retrieve the property values, lazy loading and explicit loading are also both known as deferred loading.</p>
+
 <h2 id="the-dbcontext-class">The <code class="prettyprint">DbContext</code> class</h2>
 
 <p><code class="prettyprint">DbContext</code> allows you to interact with the database that Entity Framework creates.</p>
@@ -312,10 +359,9 @@ You can use Entity Framework for code-first implementations. This allows you to 
 
 <h2 id="the-dbmigrationsconfigurationtcontext-class">The <code class="prettyprint">DbMigrationsConfiguration&lt;TContext&gt;</code> Class</h2>
 
-<p>This is where you set the seed method.</p>
+<p>This is where you can set a seed method that will run every time &lsquo;Update-Database&rsquo; is run, even if there is no explicit pending migration. This is in contrast to the Database initializer <code class="prettyprint">Seed</code> method, which will only run when the database is created. <a href="https://blog.oneunicorn.com/2013/05/28/database-initializer-and-migrations-seed-methods">Database initializer and Migrations Seed methods</a> is a great blog post that covers this in more detail.</p>
 
-<p>https://blog.oneunicorn.com/2013/05/28/database-initializer-and-migrations-seed-methods/
-Migrations Seed
+<p>Migrations Seed
 Migrations introduced its own Seed method on the DbMigrationsConfiguration class. This seed method is different from the database initializer Seed method in two important ways:</p>
 
 <p>It runs whenever the Update-Database PowerShell command is executed. Unless the Migrations initializer is being used the Migrations Seed method will not be executed when your application starts.
@@ -627,6 +673,12 @@ Sequence contains more than one element</p>
 
 <p>Datatables is a great JQuery Library</p>
 
+<h2 id="how-to-display-a-field-date-value-that-might-be-null">How to display a field date value that might be null</h2>
+<pre class="highlight html tab-html"><code>@if (item.DateAssigned.HasValue)
+                {
+                    @item.DateAssigned.Value.ToString("MM/dd/yyyy")
+                }
+</code></pre>
 <h1 id="controllers">Controllers</h1>
 
 <p>Rather than having a direct relationship between the URL and a file living on the web server’s hard
