@@ -438,6 +438,12 @@ You can use Entity Framework for code-first implementations. This allows you to 
 </code></pre>
 <p>You can find them in <code class="prettyprint">[ProjectName]\obj\Release\Package\PackageTmp\Web.config</code>.</p>
 
+<h2 id="drop-and-recreate-databases">Drop and Recreate Databases</h2>
+
+<blockquote>
+<p>The Entity Framework can automatically create (or drop and re-create) a database for you when the application runs. You can specify that this should be done every time your application runs or only when the model is out of sync with the existing database. You can also write a Seed method that the Entity Framework automatically calls after creating the database in order to populate it with test data. - <a href="https://docs.microsoft.com/en-us/aspnet/mvc/overview/getting-started/getting-started-with-ef-using-mvc/creating-an-entity-framework-data-model-for-an-asp-net-mvc-application#set-up-ef-to-initialize-the-database-with-test-data">Set up EF to initialize the database with test data</a></p>
+</blockquote>
+
 <h2 id="migrations">Migrations</h2>
 
 <p>Code First Migrations allow you to update your data model and update the database schema without having to drop and re-create the database.</p>
