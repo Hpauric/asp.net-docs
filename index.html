@@ -314,20 +314,6 @@ You can use Entity Framework for code-first implementations. This allows you to 
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre>
-<h2 id="explicit-loading">Explicit Loading</h2>
-
-<p>https://stackoverflow.com/questions/26661771/what-does-include-do-in-linq</p>
-
-<p>Explicit loading. This is similar to lazy loading, except that you explicitly retrieve the related data in code; it doesn&rsquo;t happen automatically when you access a navigation property. You load related data manually by getting the object state manager entry for an entity and calling the <code class="prettyprint">Collection.Load</code> method for collections or the <code class="prettyprint">Reference.Load</code> method for properties that hold a single entity. If you wanted to load Courses:</p>
-<pre class="highlight csharp tab-csharp"><code><span class="nf">Collection</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span><span class="p">.</span><span class="n">Courses</span><span class="p">)</span>
-</code></pre>
-<p>If you wanted to load the Administrator navigation property, you&rsquo;d would instead use:</p>
-<pre class="highlight csharp tab-csharp"><code><span class="nf">Reference</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span><span class="p">.</span><span class="n">Administrator</span><span class="p">).)</span> <span class="n">T</span>
-</code></pre>
-<p>Typically you&rsquo;d use explicit loading only when you&rsquo;ve turned lazy loading off.</p>
-
-<p>Because they don&rsquo;t immediately retrieve the property values, lazy loading and explicit loading are also both known as deferred loading.</p>
-
 <h2 id="the-dbcontext-class">The <code class="prettyprint">DbContext</code> class</h2>
 
 <p><code class="prettyprint">DbContext</code> allows you to interact with the database that Entity Framework creates.</p>
@@ -388,6 +374,32 @@ You can use Entity Framework for code-first implementations. This allows you to 
 
 <p>Navigation properties are typically defined as virtual so that they can take advantage of an Entity Framework feature called lazy loading.</p>
 
+<h2 id="lazy-loading-eager-loading-and-explicit-loading">Lazy Loading, Eager Loading and Explicit Loading</h2>
+
+<blockquote>
+<p>There are several ways that the Entity Framework can load related data into the navigation properties of an entity:</p>
+
+<p>Lazy loading. When the entity is first read, related data isn&rsquo;t retrieved. However, the first time you attempt to access a navigation property, the data required for that navigation property is automatically retrieved. This results in multiple queries sent to the database — one for the entity itself and one each time that related data for the entity must be retrieved. The DbContext class enables lazy loading by default.</p>
+
+<p>Eager loading. When the entity is read, related data is retrieved along with it. This typically results in a single join query that retrieves all of the data that&rsquo;s needed. You specify eager loading by using the Include method.</p>
+</blockquote>
+
+<h3 id="explicit-loading">Explicit loading</h3>
+
+<p>This is similar to lazy loading, except that you explicitly retrieve the related data in code; it doesn&rsquo;t happen automatically when you access a navigation property. You load related data manually by getting the object state manager entry for an entity and calling the <code class="prettyprint">Collection.Load</code> method for collections or the <code class="prettyprint">Reference.Load</code> method for properties that hold a single entity. If you wanted to load Courses:</p>
+<pre class="highlight csharp tab-csharp"><code><span class="nf">Collection</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span><span class="p">.</span><span class="n">Courses</span><span class="p">)</span>
+</code></pre>
+<p>If you wanted to load the Administrator navigation property, you&rsquo;d would instead use:</p>
+<pre class="highlight csharp tab-csharp"><code><span class="nf">Reference</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span><span class="p">.</span><span class="n">Administrator</span><span class="p">).)</span> <span class="n">T</span>
+</code></pre>
+<p>Typically you&rsquo;d use explicit loading only when you&rsquo;ve turned lazy loading off.</p>
+
+<blockquote>
+<p>Because they don&rsquo;t immediately retrieve the property values, lazy loading and explicit loading are also both known as deferred loading.</p>
+</blockquote>
+
+<p>Interestingly, lazy loading is not yet included in Entity Framework Core (2.0). This might be because it&rsquo;s hard to implement, or it might be because the EF Core team don&rsquo;t think highly of lazy loading.</p>
+
 <h2 id="code-first">Code First</h2>
 
 <p>Entity Framework allows you to develop a data model with a Code First approach.</p>
@@ -434,15 +446,11 @@ You can use Entity Framework for code-first implementations. This allows you to 
 
 <p><a href="https://stackoverflow.com/questions/40606167/error-when-update-database-using-code-first-there-is-already-an-object-named">Great introduction to Code First Migrations</a></p>
 
-<h2 id="the-dbmigrationsconfigurationtcontext-class">The <code class="prettyprint">DbMigrationsConfiguration&lt;TContext&gt;</code> Class</h2>
+<h2 id="the-dbmigrationsconfiguration-class">The <code class="prettyprint">DbMigrationsConfiguration</code> Class</h2>
 
-<p>This is where you can set a seed method that will run every time &lsquo;Update-Database&rsquo; is run, even if there is no explicit pending migration. This is in contrast to the Database initializer <code class="prettyprint">Seed</code> method, which will only run when the database is created. <a href="https://blog.oneunicorn.com/2013/05/28/database-initializer-and-migrations-seed-methods">Database initializer and Migrations Seed methods</a> is a great blog post that covers this in more detail.</p>
+<p>The <code class="prettyprint">DbMigrationsConfiguration</code> class has its own <code class="prettyprint">Seed</code> method that will run every time the <code class="prettyprint">Update-Database</code> Powershell command is executed, even if there is no explicit pending migration. This is in contrast to the Database initializer <code class="prettyprint">Seed</code> method, which will only run when the database is created. <a href="https://blog.oneunicorn.com/2013/05/28/database-initializer-and-migrations-seed-methods">Database initializer and Migrations Seed methods</a> is a great blog post that covers this in more detail.</p>
 
-<p>Migrations Seed
-Migrations introduced its own Seed method on the DbMigrationsConfiguration class. This seed method is different from the database initializer Seed method in two important ways:</p>
-
-<p>It runs whenever the Update-Database PowerShell command is executed. Unless the Migrations initializer is being used the Migrations Seed method will not be executed when your application starts.
-It must handle cases where the database already contains data because Migrations is evolving the database rather than dropping and recreating it.</p>
+<p>It must handle cases where the database already contains data because Migrations is evolving the database rather than dropping and recreating it. For this reason, the <code class="prettyprint">AddOrUpdate</code> extension method is used in the migration Seed method.</p>
 
 <h2 id="nuget-commands">NuGet Commands</h2>
 
