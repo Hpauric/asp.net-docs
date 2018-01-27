@@ -455,20 +455,22 @@ You can use Entity Framework for code-first implementations. This allows you to 
 <h2 id="the-dropcreatedatabaseifmodelchanges-class">The <code class="prettyprint">DropCreateDatabaseIfModelChanges</code> Class</h2>
 
 <p>You can create a <code class="prettyprint">DropCreateDatabaseIfModelChanges</code> class in the same folder as your <code class="prettyprint">DbContext</code> class that will specify what will happen when your model changes.</p>
-<pre class="highlight csharp tab-csharp"><code> <span class="k">public</span> <span class="k">class</span> <span class="err">[</span><span class="nc">YourInitializer</span><span class="p">]:</span> <span class="n">System</span><span class="p">.</span><span class="n">Data</span><span class="p">.</span><span class="n">Entity</span><span class="p">.</span><span class="n">DropCreateDatabaseIfModelChanges</span><span class="k">&lt;[</span><span class="n">YourContext</span><span class="k">]&gt;</span>
+<pre class="highlight csharp tab-csharp"><code> <span class="k">public</span> <span class="k">class</span> <span class="nc">YourInitializer</span><span class="p">:</span> <span class="n">System</span><span class="p">.</span><span class="n">Data</span><span class="p">.</span><span class="n">Entity</span><span class="p">.</span><span class="n">DropCreateDatabaseIfModelChanges</span><span class="p">&lt;</span><span class="n">YourDbContext</span><span class="p">&gt;</span>
     <span class="p">{</span>
 </code></pre>
 <p>To tell Entity Framework to use your initializer class, add an element to the <code class="prettyprint">entityFramework</code> element in the application <code class="prettyprint">Web.config</code> file (the one in the root project folder):</p>
 <pre class="highlight html tab-html"><code><span class="nt">&lt;entityFramework&gt;</span>
   <span class="nt">&lt;contexts&gt;</span>
-    <span class="nt">&lt;context</span> <span class="na">type=</span><span class="s">"ContosoUniversity.DAL.SchoolContext, ContosoUniversity"</span><span class="nt">&gt;</span>
-      <span class="nt">&lt;databaseInitializer</span> <span class="na">type=</span><span class="s">"ContosoUniversity.DAL.SchoolInitializer, ContosoUniversity"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;context</span> <span class="na">type=</span><span class="s">"Namespace.YourDbContext, ProjectName"</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;databaseInitializer</span> <span class="na">type=</span><span class="s">"Namespace.YourInitializer, ProjectName"</span> <span class="nt">/&gt;</span>
     <span class="nt">&lt;/context&gt;</span>
   <span class="nt">&lt;/contexts&gt;</span>
   ...
 </code></pre>
 <h2 id="the-dbmigrationsconfiguration-class">The <code class="prettyprint">DbMigrationsConfiguration</code> Class</h2>
-
+<pre class="highlight csharp tab-csharp"><code> <span class="k">internal</span> <span class="k">sealed</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">Configuration</span> <span class="p">:</span> <span class="n">DbMigrationsConfiguration</span><span class="p">&lt;</span><span class="n">YourDbContext</span><span class="p">&gt;</span>
+    <span class="p">{</span>
+</code></pre>
 <p>The <code class="prettyprint">DbMigrationsConfiguration</code> class has its own <code class="prettyprint">Seed</code> method that will run every time the <code class="prettyprint">Update-Database</code> Powershell command is executed, even if there is no explicit pending migration. This is in contrast to the Database initializer <code class="prettyprint">Seed</code> method, which will only run when the database is created. <a href="https://blog.oneunicorn.com/2013/05/28/database-initializer-and-migrations-seed-methods">Database initializer and Migrations Seed methods</a> is a great blog post that covers this in more detail.</p>
 
 <p>It must handle cases where the database already contains data because Migrations is evolving the database rather than dropping and recreating it. For this reason, the <code class="prettyprint">AddOrUpdate</code> extension method is used in the migration Seed method.</p>
